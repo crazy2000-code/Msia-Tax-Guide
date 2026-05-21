@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MY Income Tax 攻略 2024 · YA2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green-50:#EAF3DE; --green-100:#C0DD97; --green-200:#97C459;
+  --green-600:#3B6D11; --green-700:#27500A; --green-800:#173404;
+  --amber-50:#FAEEDA; --amber-100:#FAC775; --amber-200:#EF9F27;
+  --amber-600:#854F0B; --amber-700:#633806;
+  --blue-50:#E6F1FB; --blue-100:#B5D4F4; --blue-600:#185FA5; --blue-800:#0C447C;
+  --coral-50:#FAECE7; --coral-100:#F5C4B3; --coral-600:#993C1D; --coral-800:#712B13;
+  --purple-50:#EEEDFE; --purple-100:#CECBF6; --purple-600:#534AB7; --purple-800:#3C3489;
+  --teal-50:#E1F5EE; --teal-100:#9FE1CB; --teal-600:#0F6E56; --teal-800:#085041;
+  --gray-50:#F1EFE8; --gray-100:#D3D1C7; --gray-600:#5F5E5A; --gray-800:#444441;
+  --red-50:#FCEBEB; --red-100:#F7C1C1; --red-600:#A32D2D; --red-800:#791F1F;
+  --text-primary:#1a1a18; --text-secondary:#5F5E5A; --text-muted:#888780;
+  --surface:#ffffff; --surface-2:#F7F6F1; --surface-3:#F1EFE8;
+  --border:rgba(0,0,0,0.08); --border-strong:rgba(0,0,0,0.15);
+  --radius-sm:8px; --radius-md:12px; --radius-lg:18px; --radius-xl:24px;
+  --font-body:'DM Sans', sans-serif;
+  --font-display:'DM Serif Display', serif;
+  --shadow-card:0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+}
+body {
+  font-family: var(--font-body);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: var(--blue-600); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { font-family: var(--font-body); cursor: pointer; }
+input, select { font-family: var(--font-body); }
+
+/* ── Layout ───────────────────────────────────────────────────── */
+.container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+.page-wrap { padding-bottom: 60px; }
+
+/* ── Nav ──────────────────────────────────────────────────────── */
+.topnav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.topnav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-flag { font-size: 20px; }
+.nav-tabs {
+  display: flex; gap: 4px;
+  background: var(--surface-3);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+.nav-tab {
+  border: none; background: transparent;
+  padding: 6px 14px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.nav-tab.active {
+  background: var(--surface); color: var(--text-primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.nav-tab:hover:not(.active) { color: var(--text-primary); }
+
+/* ── Hero ─────────────────────────────────────────────────────── */
+.hero {
+  padding: 48px 0 36px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-50); color: var(--green-700);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+  padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 16px; text-transform: uppercase;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 42px; line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+.hero h1 em { font-style: normal; color: var(--green-600); }
+.hero p {
+  font-size: 16px; color: var(--text-secondary);
+  max-width: 520px; line-height: 1.7; margin-bottom: 28px;
+}
+.hero-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 11px 20px; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 600;
+  border: 1.5px solid transparent;
+  transition: all 0.15s; cursor: pointer;
+}
+.btn-green { background: var(--green-600); color: #fff; border-color: var(--green-600); }
+.btn-green:hover { background: var(--green-700); }
+.btn-outline { background: var(--surface); color: var(--text-primary); border-color: var(--border-strong); }
+.btn-outline:hover { background: var(--surface-3); }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+
+/* ── Deadline Banner ──────────────────────────────────────────── */
+.deadline-section { margin-bottom: 32px; }
+.deadline-banner {
+  background: linear-gradient(135deg, var(--amber-50) 0%, #fff8ec 100%);
+  border: 1.5px solid var(--amber-100);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+}
+.deadline-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.deadline-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--amber-100); color: var(--amber-700);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.deadline-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.deadline-sub { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+.deadline-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.deadline-card {
+  background: var(--surface); border-radius: var(--radius-md);
+  padding: 14px 16px; border: 1px solid var(--border);
+}
+.deadline-card .tag {
+  font-size: 11px; font-weight: 600; color: var(--amber-600);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+}
+.deadline-card .date {
+  font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px;
+}
+.deadline-card .desc { font-size: 12px; color: var(--text-secondary); }
+.countdown-wrap {
+  display: flex; align-items: center; gap: 8px; margin-top: 14px;
+}
+.countdown-label { font-size: 12px; color: var(--text-secondary); }
+.countdown-badge {
+  display: flex; gap: 6px;
+}
+.c-unit {
+  background: var(--amber-600); color: #fff;
+  border-radius: 6px; padding: 3px 8px;
+  font-size: 13px; font-weight: 700; min-width: 32px; text-align: center;
+}
+.c-sep { color: var(--amber-600); font-weight: 700; align-self: center; }
+
+/* ── Stat Cards ───────────────────────────────────────────────── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-card);
+}
+.stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.stat-value { font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.stat-sub { font-size: 11px; color: var(--text-secondary); }
+.stat-pill {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px; margin-top: 4px;
+}
+.pill-green { background: var(--green-50); color: var(--green-700); }
+.pill-blue { background: var(--blue-50); color: var(--blue-800); }
+
+/* ── Section ──────────────────────────────────────────────────── */
+.section { margin-bottom: 36px; }
+.section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: 17px; font-weight: 600; color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+}
+.section-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.progress-bar-wrap { margin-bottom: 20px; }
+.progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+.progress-track { height: 8px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--green-200); border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+
+/* ── User Type Toggle ─────────────────────────────────────────── */
+.user-toggle {
+  display: flex; gap: 0;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+.toggle-btn {
+  padding: 9px 20px; border: none; background: transparent;
+  font-size: 13px; font-weight: 600; color: var(--text-secondary);
+  transition: all 0.15s; display: flex; align-items: center; gap: 6px;
+}
+.toggle-btn.active { background: var(--text-primary); color: #fff; }
+.toggle-btn:not(:last-child) { border-right: 1.5px solid var(--border-strong); }
+
+/* ── Category Cards ───────────────────────────────────────────── */
+.cat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.cat-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px; cursor: pointer;
+  transition: background 0.12s;
+}
+.cat-header:hover { background: var(--surface-2); }
+.cat-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.cat-info { flex: 1; }
+.cat-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.cat-desc { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+.cat-right { display: flex; align-items: center; gap: 12px; }
+.cat-progress {
+  font-size: 12px; color: var(--text-muted);
+}
+.cat-amount { font-size: 14px; font-weight: 700; color: var(--green-600); min-width: 70px; text-align: right; }
+.chevron { font-size: 18px; color: var(--text-muted); transition: transform 0.25s; }
+.chevron.open { transform: rotate(180deg); }
+.cat-body { display: none; border-top: 1px solid var(--border); }
+.cat-body.open { display: block; }
+
+/* ── Relief Item ──────────────────────────────────────────────── */
+.relief-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.relief-item:last-child { border-bottom: none; }
+.relief-item:hover { background: var(--surface-2); }
+.check-wrap { padding-top: 2px; flex-shrink: 0; }
+.check-wrap input[type=checkbox] {
+  width: 16px; height: 16px; accent-color: var(--green-600); cursor: pointer;
+}
+.ri-content { flex: 1; }
+.ri-name {
+  font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px;
+  transition: color 0.1s;
+}
+.ri-name.done { color: var(--text-muted); text-decoration: line-through; }
+.ri-limit { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+.ri-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px;
+}
+.tag-receipt { background: var(--amber-50); color: var(--amber-600); }
+.tag-doc { background: var(--blue-50); color: var(--blue-800); }
+.tag-auto { background: var(--teal-50); color: var(--teal-600); }
+.tag-digital { background: var(--purple-50); color: var(--purple-600); }
+.tag-self { background: var(--coral-50); color: var(--coral-600); }
+.ri-amount { font-size: 13px; font-weight: 700; color: var(--text-secondary); min-width: 72px; text-align: right; flex-shrink: 0; }
+.ri-amount.checked { color: var(--green-600); }
+
+/* ── Calculator ───────────────────────────────────────────────── */
+.calc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+.field input, .field select {
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px; font-size: 14px;
+  color: var(--text-primary);
+  background: var(--surface);
+  outline: none; transition: border-color 0.15s;
+}
+.field input:focus, .field select:focus { border-color: var(--green-600); }
+.field .hint { font-size: 11px; color: var(--text-muted); }
+.calc-result-wrap {
+  background: var(--surface-3);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+  border: 1px solid var(--border);
+}
+.cr-item { text-align: center; }
+.cr-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+.cr-value { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.cr-value.green { color: var(--green-600); }
+.cr-value.red { color: var(--coral-600); }
+.cr-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+.bracket-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.bracket-table th { text-align: left; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 10px; background: var(--surface-3); }
+.bracket-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+.bracket-table tr.active-row td { background: var(--green-50); color: var(--green-700); font-weight: 600; }
+.bracket-table tr:last-child td { border-bottom: none; }
+
+/* ── Tips Grid ────────────────────────────────────────────────── */
+.tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex; gap: 12px;
+  box-shadow: var(--shadow-card);
+}
+.tip-icon-wrap {
+  width: 36px; height: 36px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.tip-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.tip-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+/* ── Tabs ─────────────────────────────────────────────────────── */
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── Footer ───────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+  text-align: center;
+}
+.footer p { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero h1 { font-size: 30px; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .deadline-cards { grid-template-columns: 1fr; }
+  .calc-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .calc-result-wrap { grid-template-columns: 1fr; gap: 12px; }
+  .nav-tabs { display: none; }
+}
+</style>
+</head>
+<body>
+<!-- ── Nav ── -->
+<nav class="topnav">
+  <div class="container">
+    <div class="topnav-inner">
+      <div class="logo">
+        <span class="logo-flag">🇲🇾</span>
+        TaxSavvy MY
+      </div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('checklist',this)">Relief Checklist</button>
+        <button class="nav-tab" onclick="switchTab('calc',this)">Kalkulator</button>
+        <button class="nav-tab" onclick="switchTab('tips',this)">Tips & FAQ</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="container page-wrap">
+  <section class="hero">
+    <div class="hero-eyebrow">✦ YA 2024 · e-Filing Edition</div>
+    <h1>Malaysia Income Tax<br /><em>攻略</em> — Claim Semua!</h1>
+    <p>Ramai yang missed out ribuan ringgit tax relief setiap tahun. 这个攻略帮你 claim 到尽 — 打工族 &amp; 自雇人士 都适用。</p>
+    <div class="hero-cta">
+      <button class="btn btn-green" onclick="switchTab('checklist', document.querySelector('.nav-tab'))">
+        ☑ Mula Checklist
+      </button>
+      <button class="btn btn-outline" onclick="switchTab('calc', document.querySelectorAll('.nav-tab')[1])">
+        🧮 Kira Cukai Saya
+      </button>
+    </div>
+  </section>
+
+  <!-- ── Deadline ── -->
+  <section class="deadline-section">
+    <div class="deadline-banner">
+      <div class="deadline-header">
+        <div class="deadline-icon">📅</div>
+        <div>
+          <div class="deadline-title">Tarikh Akhir e-Filing 2025 (YA 2024) — 记得别迟交！</div>
+          <div class="deadline-sub">Semua tarikh adalah untuk e-Filing. Manual submission = 2 minggu lebih awal.</div>
+        </div>
+      </div>
+      <div class="deadline-cards">
+        <div class="deadline-card">
+          <div class="tag">⚡ Pekerja Bergaji</div>
+          <div class="date">30 April 2025</div>
+          <div class="desc">Borang BE · 打工族 · Salaried employees</div>
+        </div>
+        <div class="deadline-card">
+          <div class="tag">💼 Self-Employed / Freelance</div>
+          <div class="date">30 Jun 2025</div>
+          <div class="desc">Borang B · 自雇人士 · Business income</div>
+        </div>
+        <div class="deadline-card">
+          <div class="tag">🏢 Syarikat (Company)</div>
+          <div class="date">30 Jul 2025</div>
+          <div class="desc">Borang C · Sdn Bhd / Enterprise</div>
+        </div>
+      </div>
+      <div class="countdown-wrap">
+        <span class="countdown-label">Countdown (BE Form):</span>
+        <div class="countdown-badge">
+          <span class="c-unit" id="cd-d">--</span>
+          <span class="c-sep">hari</span>
+          <span class="c-unit" id="cd-h">--</span>
+          <span class="c-sep">jam</span>
+          <span class="c-unit" id="cd-m">--</span>
+          <span class="c-sep">min</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats Row ── -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Relief Claimed</div>
+      <div class="stat-value" id="s-claimed">RM 0</div>
+      <div class="stat-sub">Dari max RM 35,400+</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Item Checklist</div>
+      <div class="stat-value"><span id="s-checked">0</span><span style="font-size:14px;color:var(--text-muted)"> / <span id="s-total">0</span></span></div>
+      <div class="stat-sub">items ditandakan</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Est. Tax Saved</div>
+      <div class="stat-value green" id="s-saved" style="color:var(--green-600)">RM 0</div>
+      <div class="stat-sub">@ bracket berkenaan</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Progress</div>
+      <div class="stat-value" id="s-pct">0%</div>
+      <div class="stat-sub">checklist selesai</div>
+    </div>
+  </div>
+
+  <!-- ════ TAB: CHECKLIST ════ -->
+  <div class="tab-pane active" id="tab-checklist">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">
+          <div class="section-icon" style="background:var(--green-50);color:var(--green-600)">☑</div>
+          Tax Relief Checklist
+        </div>
+      </div>
+
+      <div class="user-toggle">
+        <button class="toggle-btn active" onclick="setUserType('salaried',this)">👔 打工族 (Salaried)</button>
+        <button class="toggle-btn" onclick="setUserType('self',this)">💼 自雇 (Self-Employed)</button>
+        <button class="toggle-btn" onclick="setUserType('both',this)">🔀 Kedua-dua</button>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-meta">
+          <span>Checklist completion</span>
+          <span id="p-pct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="p-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div id="categories-wrap"></div>
+    </div>
+  </div>
+
+  <!-- ════ TAB: CALCULATOR ════ -->
+  <div class="tab-pane" id="tab-calc">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">
+          <div class="section-icon" style="background:var(--blue-50);color:var(--blue-600)">🧮</div>
+          Kalkulator Cukai Pendapatan 2024
+        </div>
+      </div>
+
+      <div class="calc-card">
+        <div class="calc-grid">
+          <div class="field">
+            <label>Jenis Penilai</label>
+            <select id="f-type" onchange="calcTax()">
+              <option value="salaried">Pekerja Bergaji (BE)</option>
+              <option value="self">Self-Employed (B)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Status Perkahwinan</label>
+            <select id="f-marital" onchange="calcTax()">
+              <option value="single">Bujang / Lajang</option>
+              <option value="married_spouse">Berkahwin (pasangan tiada kerja)</option>
+              <option value="married_both">Berkahwin (pasangan bekerja)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Jumlah Pendapatan Tahunan (RM)</label>
+            <input type="number" id="f-income" placeholder="cth: 72000" oninput="calcTax()" />
+            <span class="hint">EPF contribution akan dikira auto (11% untuk pekerja)</span>
+          </div>
+          <div class="field">
+            <label>PCB / MTD Potongan Setahun (RM)</label>
+            <input type="number" id="f-pcb" placeholder="cth: 4800" oninput="calcTax()" />
+            <span class="hint">Lihat penyata gaji / slip gaji anda</span>
+          </div>
+          <div class="field">
+            <label>Jumlah Relief dari Checklist (RM)</label>
+            <input type="number" id="f-relief" placeholder="auto-filled from checklist" oninput="calcTax()" />
+            <span class="hint">Auto-pull dari checklist, atau isi manual</span>
+          </div>
+          <div class="field">
+            <label>Bilangan Anak (layak dituntut)</label>
+            <input type="number" id="f-kids" placeholder="0" min="0" max="10" oninput="calcTax()" />
+            <span class="hint">RM 2,000 per anak (bawah 18) / RM 8,000 (18+, belajar)</span>
+          </div>
+        </div>
+
+        <div class="calc-result-wrap" id="calc-result-wrap">
+          <div class="cr-item">
+            <div class="cr-label">Pendapatan Bercukai</div>
+            <div class="cr-value" id="r-taxable">—</div>
+            <div class="cr-sub">Selepas semua relief</div>
+          </div>
+          <div class="cr-item">
+            <div class="cr-label">Cukai Terutang</div>
+            <div class="cr-value" id="r-tax">—</div>
+            <div class="cr-sub">Berdasarkan jadual PCB 2024</div>
+          </div>
+          <div class="cr-item">
+            <div class="cr-label">Rebat / Bayar Balik</div>
+            <div class="cr-value" id="r-net">—</div>
+            <div class="cr-sub" id="r-net-sub">—</div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div style="font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">📊 Jadual Cukai 2024 — Mana bracket anda?</div>
+        <table class="bracket-table" id="bracket-table">
+          <thead>
+            <tr>
+              <th>Pendapatan Bercukai (RM)</th>
+              <th>Kadar (%)</th>
+              <th>Cukai (RM)</th>
+            </tr>
+          </thead>
+          <tbody id="bracket-tbody"></tbody>
+        </table>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:10px;">⚠ Ini anggaran sahaja. Sila rujuk LHDN atau akauntan berlesen untuk jumlah tepat.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ TAB: TIPS ════ -->
+  <div class="tab-pane" id="tab-tips">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">
+          <div class="section-icon" style="background:var(--amber-50);color:var(--amber-600)">💡</div>
+          Tips Penting &amp; FAQ — 必须知道的事
+        </div>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--green-50);color:var(--green-600)">🧾</div>
+          <div>
+            <div class="tip-title">Simpan Resit 7 Tahun</div>
+            <div class="tip-text">LHDN boleh audit anda sehingga 7 tahun ke belakang. Scan semua resit dan simpan dalam Google Drive / folder digital. Resit yang hilang = claim void!</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--blue-50);color:var(--blue-600)">📱</div>
+          <div>
+            <div class="tip-title">Lifestyle Relief RM 2,500 — Jangan Miss!</div>
+            <div class="tip-text">Merangkumi: buku, langganan internet, telefon bimbit baru, komputer/tablet, peralatan sukan, dan gym membership. 这些全部都可以 claim，很多人不知道！</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--purple-50);color:var(--purple-600)">👫</div>
+          <div>
+            <div class="tip-title">Spouse Relief Strategy</div>
+            <div class="tip-text">Jika pasangan tidak bekerja, anda layak claim RM 4,000 spouse relief + tambahan RM 3,500 untuk premium insurans hayat &amp; EPF pasangan. 夫妻策略很重要！</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--coral-50);color:var(--coral-600)">🏥</div>
+          <div>
+            <div class="tip-title">Medical &amp; Insurance — Maximize</div>
+            <div class="tip-text">Medical checkup (RM 1,000) + medical insurance (RM 3,000) + SOCSO/EIS boleh diklaim secara berasingan. Jangan gabungkan! Mata &amp; gigi pun masuk.</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--amber-50);color:var(--amber-600)">💰</div>
+          <div>
+            <div class="tip-title">Self-Employed: Claim Business Expenses</div>
+            <div class="tip-text">Freelancer / self-employed boleh tolak kos perniagaan sebelum mengira pendapatan bersih. Home office, laptop, perisian, perjalanan kerja — semua layak! 自雇人士要善用这个。</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--teal-50);color:var(--teal-600)">🌿</div>
+          <div>
+            <div class="tip-title">EV &amp; Green Incentives (Baru 2024)</div>
+            <div class="tip-text">Relief baru: EV charging equipment (RM 2,500). Juga ada relief untuk pembelian EV / hybrid kenderaan. Green is the new savings! 2024新增的绿色减税项目。</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--blue-50);color:var(--blue-600)">📚</div>
+          <div>
+            <div class="tip-title">Pendidikan Diri — RM 7,000</div>
+            <div class="tip-text">Upskilling course, professional cert, online course (Coursera, Udemy etc.) — semua layak sehingga RM 7,000! 自我提升课程全部可以扣税，包括线上课程。</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon-wrap" style="background:var(--gray-50);color:var(--gray-600)">⏰</div>
+          <div>
+            <div class="tip-title">Denda Lewat — Avoid At All Costs</div>
+            <div class="tip-text">Denda lewat hantar = 10% dari cukai terutang, boleh naik sehingga 25%+ dengan penalti tambahan. Late adalah very expensive! 迟交后果很严重，一定要准时！</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" style="margin:28px 0" />
+      <div style="font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:16px;">🔗 Pautan Berguna</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <a href="https://mytax.hasil.gov.my" target="_blank" class="btn btn-outline btn-sm" style="justify-content:center">🏛 MyTax Portal (LHDN)</a>
+        <a href="https://www.hasil.gov.my/en/individuals/individuals-life-events/work-and-income/tax-relief/" target="_blank" class="btn btn-outline btn-sm" style="justify-content:center">📋 Senarai Rasmi Tax Relief</a>
+        <a href="https://www.kwsp.gov.my" target="_blank" class="btn btn-outline btn-sm" style="justify-content:center">💼 Portal EPF / KWSP</a>
+        <a href="https://www.lhdn.gov.my/lhdnv2/en/schedule_of_tax_fees.html" target="_blank" class="btn btn-outline btn-sm" style="justify-content:center">📊 Jadual Cukai LHDN</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>TaxSavvy MY · Panduan tidak rasmi untuk rujukan am sahaja.<br />
+    Untuk nasihat cukai yang tepat, sila rujuk Ejen Cukai berlesen atau LHDN secara terus.<br />
+    Data berdasarkan YA 2024 · Dikemaskini Mac 2025</p>
+  </footer>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────
+const CATS = [
+  {
+    id: 'basic', name: 'Individu & Asas', emoji: '👤',
+    bg: 'var(--green-50)', color: 'var(--green-600)',
+    desc: 'Automatic & wajib — 自动扣除',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'ind', name:'Individual Relief (automatic)', limit:'RM 9,000', amount:9000, receipt:'Tiada resit — auto', tags:['auto'], checked:true, for:['salaried','self','both'] },
+      { id:'epf', name:'EPF / KWSP Contribution', limit:'RM 4,000', amount:4000, receipt:'Penyata EPF tahunan', tags:['doc'], for:['salaried','both'] },
+      { id:'epf_self', name:'EPF Self-Contribution (self-employed)', limit:'RM 4,000', amount:4000, receipt:'Penyata EPF / i-Saraan', tags:['doc','self'], for:['self','both'] },
+      { id:'life_ins', name:'Insurans Hayat + EPF (gabungan)', limit:'RM 7,000 combined', amount:3000, receipt:'Penyata polisi + resit premium', tags:['doc'], for:['salaried','self','both'] },
+      { id:'socso', name:'SOCSO / EIS Contribution', limit:'RM 350', amount:350, receipt:'Slip gaji / penyata SOCSO', tags:['doc'], for:['salaried','both'] },
+    ]
+  },
+  {
+    id: 'lifestyle', name: 'Gaya Hidup (Lifestyle)', emoji: '📱',
+    bg: 'var(--blue-50)', color: 'var(--blue-600)',
+    desc: 'Telefon, internet, sukan, buku — 生活开销',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'books', name:'Buku, majalah, jurnal, komik', limit:'Dalam RM 2,500 lifestyle', amount:500, receipt:'Resit pembelian', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'internet', name:'Langganan internet rumah', limit:'Dalam RM 2,500 lifestyle', amount:1200, receipt:'Bil Unifi / Maxis / TIME', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'phone', name:'Telefon bimbit baru', limit:'Dalam RM 2,500 lifestyle', amount:2500, receipt:'Resit + IMEI', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'sports', name:'Peralatan sukan / gym membership', limit:'Dalam RM 2,500 lifestyle', amount:800, receipt:'Resit / invoice gym', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'pc', name:'Komputer / laptop / tablet baru', limit:'RM 2,500 (berasingan)', amount:2500, receipt:'Resit + warranty card', tags:['receipt','digital'], for:['salaried','self','both'] },
+      { id:'course', name:'Kursus online / e-learning', limit:'Dalam RM 2,500 gadget', amount:1000, receipt:'Resit / invoice course + sijil', tags:['receipt','digital'], for:['salaried','self','both'] },
+    ]
+  },
+  {
+    id: 'medical', name: 'Perubatan & Kesihatan', emoji: '🏥',
+    bg: 'var(--coral-50)', color: 'var(--coral-600)',
+    desc: 'Checkup, insurans, ubatan — 医疗扣税',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'checkup', name:'Pemeriksaan perubatan lengkap (checkup)', limit:'RM 1,000', amount:1000, receipt:'Resit klinik / hospital', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'dental', name:'Rawatan pergigian / dental', limit:'Dalam RM 1,000 medical', amount:500, receipt:'Resit klinik gigi', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'eye', name:'Pemeriksaan mata / cermin mata', limit:'Dalam RM 1,000 medical', amount:400, receipt:'Resit optometris', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'med_ins', name:'Premium insurans perubatan swasta', limit:'RM 3,000', amount:3000, receipt:'Penyata polisi + resit tahunan', tags:['doc'], for:['salaried','self','both'] },
+      { id:'serious', name:'Rawatan penyakit serius / ubatan khas', limit:'RM 8,000 (combined)', amount:2000, receipt:'Resit hospital + surat doktor', tags:['receipt','doc'], for:['salaried','self','both'] },
+      { id:'parent_med', name:'Penjagaan perubatan ibu bapa', limit:'RM 8,000', amount:4000, receipt:'Resit hospital / nursing home ibu bapa', tags:['receipt','doc'], for:['salaried','self','both'] },
+    ]
+  },
+  {
+    id: 'family', name: 'Keluarga & Waris', emoji: '👨‍👩‍👧',
+    bg: 'var(--purple-50)', color: 'var(--purple-600)',
+    desc: 'Pasangan, anak, ibu bapa — 家庭扣税',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'spouse', name:'Pasangan tidak bekerja', limit:'RM 4,000', amount:4000, receipt:'IC pasangan (salinan)', tags:['doc'], for:['salaried','self','both'] },
+      { id:'child_u18', name:'Anak bawah 18 tahun (per anak)', limit:'RM 2,000 / anak', amount:2000, receipt:'Sijil lahir anak', tags:['doc'], for:['salaried','self','both'] },
+      { id:'child_o18', name:'Anak 18+ belajar di universiti/kolej', limit:'RM 8,000 / anak', amount:8000, receipt:'Sijil universiti + sijil lahir', tags:['doc'], for:['salaried','self','both'] },
+      { id:'child_dis', name:'Anak OKU / kurang upaya', limit:'RM 6,000 (tambahan)', amount:6000, receipt:'Kad OKU / surat akreditasi', tags:['doc'], for:['salaried','self','both'] },
+      { id:'parents', name:'Ibu bapa (tidak bekerja)', limit:'RM 8,000', amount:8000, receipt:'IC ibu bapa + bukti kebergantungan', tags:['doc'], for:['salaried','self','both'] },
+      { id:'parent_dis', name:'Ibu bapa OKU / kurang upaya', limit:'RM 8,000 tambahan', amount:8000, receipt:'Kad OKU ibu bapa', tags:['doc'], for:['salaried','self','both'] },
+    ]
+  },
+  {
+    id: 'education', name: 'Pendidikan', emoji: '📚',
+    bg: 'var(--amber-50)', color: 'var(--amber-600)',
+    desc: 'Kursus, yuran, kemahiran — 教育扣税',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'edu_self', name:'Kursus kemahiran / further education (diri sendiri)', limit:'RM 7,000', amount:7000, receipt:'Resit yuran + sijil / transkrip', tags:['receipt','doc'], for:['salaried','self','both'] },
+      { id:'edu_child', name:'Yuran pengajian anak (preschool - universiti)', limit:'RM 8,000', amount:8000, receipt:'Resit yuran anak', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'sspn', name:'Simpanan SSPN (tabung pendidikan anak)', limit:'RM 8,000', amount:8000, receipt:'Penyata SSPN tahunan', tags:['doc'], for:['salaried','self','both'] },
+    ]
+  },
+  {
+    id: 'investment', name: 'Simpanan & Pelaburan', emoji: '📈',
+    bg: 'var(--teal-50)', color: 'var(--teal-600)',
+    desc: 'PRS, ASB, deferred annuity — 储蓄投资',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'prs', name:'Caruman PRS (Private Retirement Scheme)', limit:'RM 3,000', amount:3000, receipt:'Penyata PRS tahunan', tags:['doc'], for:['salaried','self','both'] },
+      { id:'annuity', name:'Premium anuiti tertangguh / deferred annuity', limit:'RM 3,000 (combined dengan med ins)', amount:3000, receipt:'Penyata polisi anuiti', tags:['doc'], for:['salaried','self','both'] },
+    ]
+  },
+  {
+    id: 'green', name: 'Green & Lain-lain', emoji: '🌿',
+    bg: 'var(--teal-50)', color: 'var(--teal-600)',
+    desc: 'EV, zakat, sumbangan — 其他扣税',
+    for: ['salaried','self','both'],
+    items: [
+      { id:'ev', name:'EV charging equipment / installation', limit:'RM 2,500', amount:2500, receipt:'Resit pemasangan + invois peralatan', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'zakat', name:'Zakat / fitrah (Muslim sahaja)', limit:'Tiada had (rebat terus)', amount:1200, receipt:'Resit zakat rasmi (e-zakat)', tags:['receipt'], for:['salaried','self','both'] },
+      { id:'donation', name:'Derma / sumbangan (tax exempt org)', limit:'10% dari pendapatan', amount:500, receipt:'Resit 501(c) / borang pengesahan LHDN', tags:['receipt','doc'], for:['salaried','self','both'] },
+      { id:'disabled', name:'Peralatan sokongan OKU (diri sendiri)', limit:'RM 6,000', amount:6000, receipt:'Kad OKU + resit peralatan', tags:['receipt','doc'], for:['salaried','self','both'] },
+    ]
+  },
+  {
+    id: 'selfbiz', name: 'Perbelanjaan Perniagaan', emoji: '💼',
+    bg: 'var(--coral-50)', color: 'var(--coral-600)',
+    desc: 'Khusus untuk self-employed / freelancer',
+    for: ['self','both'],
+    items: [
+      { id:'biz_equip', name:'Peralatan perniagaan (komputer, kamera, dsb)', limit:'Boleh tolak penuh', amount:5000, receipt:'Invois + resit pembelian', tags:['receipt','self'], for:['self','both'] },
+      { id:'biz_travel', name:'Perbelanjaan perjalanan perniagaan', limit:'Nisbah penggunaan perniagaan', amount:2000, receipt:'Log perjalanan + resit minyak/tol', tags:['receipt','self'], for:['self','both'] },
+      { id:'home_office', name:'Home office expenses (kadar proporsional)', limit:'Berdasarkan % ruang / masa', amount:1500, receipt:'Bil utiliti + sewa / loan statement', tags:['receipt','self'], for:['self','both'] },
+      { id:'biz_ins', name:'Insurans perniagaan (professional indemnity, dsb)', limit:'Boleh tolak penuh', amount:1200, receipt:'Penyata polisi perniagaan', tags:['doc','self'], for:['self','both'] },
+      { id:'subscription', name:'Perisian & langganan perniagaan (SaaS, cloud)', limit:'Boleh tolak penuh', amount:3000, receipt:'Invoice / resit tahunan', tags:['receipt','digital','self'], for:['self','both'] },
+    ]
+  },
+];
+
+// ── State ──────────────────────────────────────────────────────────
+let checkState = {};
+let userType = 'salaried';
+
+function initState() {
+  CATS.forEach(cat => {
+    cat.items.forEach(item => {
+      if (checkState[item.id] === undefined) {
+        checkState[item.id] = item.checked || false;
+      }
+    });
+  });
+}
+
+// ── Build Categories ──────────────────────────────────────────────
+function buildCategories() {
+  const wrap = document.getElementById('categories-wrap');
+  wrap.innerHTML = '';
+  let totalItems = 0, totalChecked = 0;
+
+  CATS.forEach(cat => {
+    const visibleItems = cat.items.filter(i => i.for.includes(userType) || userType === 'both' || i.for.includes('both'));
+    if (visibleItems.length === 0) return;
+
+    totalItems += visibleItems.length;
+    const checkedItems = visibleItems.filter(i => checkState[i.id]);
+    totalChecked += checkedItems.length;
+    const catAmount = checkedItems.reduce((s,i) => s + i.amount, 0);
+
+    const card = document.createElement('div');
+    card.className = 'cat-card';
+    card.innerHTML = `
+      <div class="cat-header" onclick="toggleCat('${cat.id}')">
+        <div class="cat-icon" style="background:${cat.bg};color:${cat.color}">${cat.emoji}</div>
+        <div class="cat-info">
+          <div class="cat-name">${cat.name}</div>
+          <div class="cat-desc">${cat.desc} · ${visibleItems.length} item</div>
+        </div>
+        <div class="cat-right">
+          <span class="cat-progress">${checkedItems.length}/${visibleItems.length}</span>
+          <span class="cat-amount" id="cat-amt-${cat.id}">${catAmount > 0 ? 'RM '+catAmount.toLocaleString() : '—'}</span>
+          <span class="chevron" id="chev-${cat.id}">⌄</span>
+        </div>
+      </div>
+      <div class="cat-body" id="cat-body-${cat.id}">
+        ${visibleItems.map(item => buildItem(item)).join('')}
+      </div>`;
+    wrap.appendChild(card);
+  });
+
+  document.getElementById('s-total').textContent = totalItems;
+  document.getElementById('total-count-hidden') && null;
+  updateStats();
+}
+
+function buildItem(item) {
+  const tagMap = {
+    receipt: ['tag-receipt','🧾 Resit'],
+    doc: ['tag-doc','📄 Dokumen'],
+    auto: ['tag-auto','✓ Auto'],
+    digital: ['tag-digital','💾 Digital OK'],
+    self: ['tag-self','💼 Self-Employed'],
+  };
+  const tags = item.tags.map(t => `<span class="tag ${tagMap[t][0]}">${tagMap[t][1]}</span>`).join('');
+  const checked = checkState[item.id];
+  return `
+    <div class="relief-item" onclick="toggleItem('${item.id}')">
+      <div class="check-wrap">
+        <input type="checkbox" id="cb-${item.id}" ${checked ? 'checked' : ''} onclick="event.stopPropagation();toggleItem('${item.id}')" />
+      </div>
+      <div class="ri-content">
+        <div class="ri-name${checked ? ' done' : ''}" id="rn-${item.id}">${item.name}</div>
+        <div class="ri-limit">${item.limit} · ${item.receipt}</div>
+        <div class="ri-tags">${tags}</div>
+      </div>
+      <div class="ri-amount${checked ? ' checked' : ''}" id="ra-${item.id}">RM ${item.amount.toLocaleString()}</div>
+    </div>`;
+}
+
+function toggleCat(id) {
+  const body = document.getElementById('cat-body-' + id);
+  const chev = document.getElementById('chev-' + id);
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function toggleItem(id) {
+  checkState[id] = !checkState[id];
+  const cb = document.getElementById('cb-' + id);
+  const rn = document.getElementById('rn-' + id);
+  const ra = document.getElementById('ra-' + id);
+  if (cb) cb.checked = checkState[id];
+  if (rn) rn.classList.toggle('done', checkState[id]);
+  if (ra) ra.classList.toggle('checked', checkState[id]);
+  updateStats();
+  updateCatAmount();
+}
+
+function updateCatAmount() {
+  CATS.forEach(cat => {
+    const el = document.getElementById('cat-amt-' + cat.id);
+    if (!el) return;
+    const visItems = cat.items.filter(i => i.for.includes(userType) || userType === 'both' || i.for.includes('both'));
+    const amt = visItems.filter(i => checkState[i.id]).reduce((s,i) => s + i.amount, 0);
+    el.textContent = amt > 0 ? 'RM ' + amt.toLocaleString() : '—';
+  });
+}
+
+function updateStats() {
+  let claimed = 0, checked = 0, total = 0;
+  CATS.forEach(cat => {
+    cat.items.forEach(item => {
+      const visible = item.for.includes(userType) || userType === 'both' || item.for.includes('both');
+      if (visible) {
+        total++;
+        if (checkState[item.id]) { claimed += item.amount; checked++; }
+      }
+    });
+  });
+  const pct = total > 0 ? Math.round(checked / total * 100) : 0;
+  document.getElementById('s-claimed').textContent = 'RM ' + claimed.toLocaleString();
+  document.getElementById('s-checked').textContent = checked;
+  document.getElementById('s-total').textContent = total;
+  document.getElementById('s-saved').textContent = 'RM ' + Math.round(claimed * 0.13).toLocaleString();
+  document.getElementById('s-pct').textContent = pct + '%';
+  document.getElementById('p-pct').textContent = pct + '%';
+  document.getElementById('p-fill').style.width = pct + '%';
+  // Sync to calculator
+  const reliefField = document.getElementById('f-relief');
+  if (reliefField && !reliefField._manual) reliefField.value = claimed;
+  calcTax();
+}
+
+function setUserType(type, btn) {
+  userType = type;
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildCategories();
+}
+
+// ── Tax Calculator ────────────────────────────────────────────────
+const BRACKETS = [
+  { min:0,      max:5000,     rate:0,    name:'RM 0 – 5,000' },
+  { min:5001,   max:20000,    rate:0.01, name:'RM 5,001 – 20,000' },
+  { min:20001,  max:35000,    rate:0.03, name:'RM 20,001 – 35,000' },
+  { min:35001,  max:50000,    rate:0.08, name:'RM 35,001 – 50,000' },
+  { min:50001,  max:70000,    rate:0.13, name:'RM 50,001 – 70,000' },
+  { min:70001,  max:100000,   rate:0.21, name:'RM 70,001 – 100,000' },
+  { min:100001, max:250000,   rate:0.24, name:'RM 100,001 – 250,000' },
+  { min:250001, max:400000,   rate:0.245,name:'RM 250,001 – 400,000' },
+  { min:400001, max:600000,   rate:0.25, name:'RM 400,001 – 600,000' },
+  { min:600001, max:Infinity, rate:0.26, name:'RM 600,001+' },
+];
+
+function calcTax() {
+  const income = parseFloat(document.getElementById('f-income').value) || 0;
+  const pcb    = parseFloat(document.getElementById('f-pcb').value) || 0;
+  const type   = document.getElementById('f-type').value;
+  const marital= document.getElementById('f-marital').value;
+  const kids   = parseInt(document.getElementById('f-kids').value) || 0;
+  let relief   = parseFloat(document.getElementById('f-relief').value) || 0;
+
+  if (!income) {
+    document.getElementById('r-taxable').textContent = '—';
+    document.getElementById('r-tax').textContent = '—';
+    document.getElementById('r-net').textContent = '—';
+    document.getElementById('r-net-sub').textContent = '—';
+    return;
+  }
+
+  // Auto EPF for salaried
+  let epf = 0;
+  if (type === 'salaried') epf = Math.min(income * 0.11, 4000);
+
+  // Spouse relief
+  let spouseRelief = 0;
+  if (marital === 'married_spouse') spouseRelief = 4000;
+
+  // Kids relief (simplified: RM 2,000 per kid if no other input)
+  const kidRelief = kids * 2000;
+
+  // Individual auto
+  const indRelief = 9000;
+
+  const totalRelief = relief + epf + spouseRelief + kidRelief + indRelief;
+  const taxable = Math.max(0, income - totalRelief);
+
+  let tax = 0, prevMax = 0;
+  const tbody = document.getElementById('bracket-tbody');
+  tbody.innerHTML = '';
+  let activeBracket = -1;
+
+  BRACKETS.forEach((b, i) => {
+    const bandSize = b.max === Infinity ? Math.max(0, taxable - b.min + 1) : Math.min(b.max, taxable) - b.min + 1;
+    const taxable_band = Math.max(0, bandSize);
+    const band_tax = taxable_band * b.rate;
+    tax += band_tax;
+    const isActive = taxable >= b.min && taxable <= b.max;
+    if (isActive) activeBracket = i;
+    const tr = document.createElement('tr');
+    if (isActive) tr.className = 'active-row';
+    tr.innerHTML = `
+      <td>${b.name}${isActive ? ' ← anda' : ''}</td>
+      <td>${(b.rate * 100).toFixed(1)}%</td>
+      <td>${band_tax > 0 ? 'RM ' + Math.round(band_tax).toLocaleString() : '—'}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Rebate RM 400 if taxable income ≤ 35,000
+  const rebate = taxable <= 35000 ? Math.min(400, tax) : 0;
+  tax = Math.max(0, tax - rebate);
+
+  const net = pcb - tax;
+  document.getElementById('r-taxable').textContent = 'RM ' + Math.round(taxable).toLocaleString();
+  document.getElementById('r-tax').textContent = 'RM ' + Math.round(tax).toLocaleString();
+  const netEl = document.getElementById('r-net');
+  netEl.textContent = (net >= 0 ? '+' : '') + 'RM ' + Math.round(Math.abs(net)).toLocaleString();
+  netEl.className = 'cr-value ' + (net >= 0 ? 'green' : 'red');
+  document.getElementById('r-net-sub').textContent = net >= 0 ? '🎉 Rebat / refund' : '⚠ Perlu bayar tambahan';
+}
+
+// ── Tab Switching ─────────────────────────────────────────────────
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ── Countdown ─────────────────────────────────────────────────────
+function updateCountdown() {
+  const deadline = new Date('2025-04-30T23:59:59+08:00');
+  const now = new Date();
+  const diff = deadline - now;
+  if (diff <= 0) {
+    document.getElementById('cd-d').textContent = '0';
+    document.getElementById('cd-h').textContent = '0';
+    document.getElementById('cd-m').textContent = '0';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('cd-d').textContent = d;
+  document.getElementById('cd-h').textContent = h;
+  document.getElementById('cd-m').textContent = m;
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+initState();
+buildCategories();
+updateCountdown();
+setInterval(updateCountdown, 60000);
+// Open first category by default
+setTimeout(() => {
+  const firstChev = document.querySelector('.cat-header');
+  if (firstChev) firstChev.click();
+}, 100);
+</script>
+</body>
+</html>
