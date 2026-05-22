@@ -909,6 +909,7 @@ function setLang(l, btn) {
   applyTranslations();
   buildCategories();
   buildTips();
+  buildFirstTimer();
   calcTax();
 }
 
@@ -1595,14 +1596,7 @@ T.ms.ft_docs_self=[
   {icon:'🧾', name:'Resit Perbelanjaan Perniagaan', hint:'Peralatan, perjalanan, pejabat, langganan', tag:'Boleh Tolak', tc:'var(--amber-600)', tb:'var(--amber-50)'},
 ];
 
-// Hook buildFirstTimer into setLang
-const _origSetLang = setLang;
-// Override applyTranslations to also rebuild first-timer
-const _origApply = applyTranslations;
-function applyTranslations() {
-  _origApply();
-  buildFirstTimer();
-}
+// buildFirstTimer is called inside setLang directly (see below)
 
 // Init first-timer
 buildFirstTimer();
