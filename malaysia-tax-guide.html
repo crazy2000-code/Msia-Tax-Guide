@@ -199,6 +199,7 @@ input,select{font-family:var(--font-body)}
           <button class="nav-tab active" onclick="switchTab('checklist',this)" data-i18n="tab_checklist">Relief Checklist</button>
           <button class="nav-tab" onclick="switchTab('calc',this)" data-i18n="tab_calc">Calculator</button>
           <button class="nav-tab" onclick="switchTab('tips',this)" data-i18n="tab_tips">Tips & FAQ</button>
+          <button class="nav-tab" onclick="switchTab('firsttime',this)" data-i18n="tab_firsttime">🌱 First-Timer</button>
         </div>
         <div class="lang-switcher">
           <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
@@ -404,6 +405,210 @@ input,select{font-family:var(--font-body)}
         <a href="https://www.kwsp.gov.my" target="_blank" class="btn btn-outline btn-sm" style="justify-content:center">💼 EPF / KWSP Portal</a>
         <a href="https://www.lhdn.gov.my/lhdnv2/en/schedule_of_tax_fees.html" target="_blank" class="btn btn-outline btn-sm" style="justify-content:center" data-i18n="link4">📊 LHDN Tax Schedule</a>
       </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: FIRST-TIMER ═══ -->
+  <div class="tab-pane" id="tab-firsttime">
+    <div class="section">
+
+      <!-- Intro banner -->
+      <div style="background:linear-gradient(135deg,var(--green-50),#f0f8e8);border:1.5px solid var(--green-100);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:24px">
+        <div style="font-size:28px;margin-bottom:8px">🌱</div>
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--text-primary);margin-bottom:8px" data-i18n="ft_title">First Time Filing? Here's Your Complete Roadmap.</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.7" data-i18n="ft_intro">Follow these 6 steps in order. By the end, you'll know exactly what to do — and won't miss a single ringgit of relief.</div>
+      </div>
+
+      <!-- Step Progress -->
+      <div style="display:flex;gap:0;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:6px;overflow-x:auto">
+        <button class="nav-tab active" id="ftstep-btn-0" onclick="ftGoStep(0)" style="flex:1;white-space:nowrap" data-i18n="ft_s1_nav">1 · Need to File?</button>
+        <button class="nav-tab" id="ftstep-btn-1" onclick="ftGoStep(1)" style="flex:1;white-space:nowrap" data-i18n="ft_s2_nav">2 · Register</button>
+        <button class="nav-tab" id="ftstep-btn-2" onclick="ftGoStep(2)" style="flex:1;white-space:nowrap" data-i18n="ft_s3_nav">3 · Documents</button>
+        <button class="nav-tab" id="ftstep-btn-3" onclick="ftGoStep(3)" style="flex:1;white-space:nowrap" data-i18n="ft_s4_nav">4 · Fill Form</button>
+        <button class="nav-tab" id="ftstep-btn-4" onclick="ftGoStep(4)" style="flex:1;white-space:nowrap" data-i18n="ft_s5_nav">5 · Submit</button>
+        <button class="nav-tab" id="ftstep-btn-5" onclick="ftGoStep(5)" style="flex:1;white-space:nowrap" data-i18n="ft_s6_nav">6 · FAQ</button>
+      </div>
+
+      <!-- ── FT STEP 1: Need to File? ── -->
+      <div class="ft-step active" id="ft-step-0">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)">
+          <div style="display:flex;align-items:center;gap:10px;padding:20px 24px 16px">
+            <div style="background:var(--green-50);color:var(--green-600);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase" data-i18n="ft_s1_tag">STEP 01</div>
+            <div style="font-size:17px;font-weight:600;color:var(--text-primary)" data-i18n="ft_s1_title">Do I Need to File Tax?</div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="padding:20px 24px">
+            <div style="background:var(--amber-50);border:1px solid var(--amber-100);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;display:flex;gap:10px">
+              <span style="font-size:18px">💡</span>
+              <div style="font-size:13px;color:var(--amber-600);line-height:1.6" data-i18n="ft_s1_alert">You <strong>must file</strong> if your annual income exceeds <strong>RM 34,000</strong> after EPF — or RM 38,202 before EPF. (~RM 2,833/month take-home)</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+              <div style="background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--green-600);border-radius:var(--radius-md);padding:14px">
+                <div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px" data-i18n="ft_salaried">Salaried</div>
+                <div style="font-size:15px;font-weight:600">RM 34,000 / yr</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px" data-i18n="ft_salaried_sub">After EPF · Form BE</div>
+              </div>
+              <div style="background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--blue-600);border-radius:var(--radius-md);padding:14px">
+                <div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px" data-i18n="ft_self">Self-Employed</div>
+                <div style="font-size:15px;font-weight:600">RM 34,000 / yr</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px" data-i18n="ft_self_sub">Net profit · Form B</div>
+              </div>
+            </div>
+            <!-- Quick checker -->
+            <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px">
+              <div style="font-size:13px;font-weight:600;margin-bottom:12px" data-i18n="ft_checker_q">Quick Check — Select your situation:</div>
+              <div style="display:flex;flex-direction:column;gap:8px" id="ft-checker-opts"></div>
+              <div id="ft-checker-result" style="display:none;margin-top:12px;padding:12px 14px;border-radius:var(--radius-md);font-size:13px;line-height:1.6;border:1px solid"></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:16px">
+          <button class="btn btn-green" onclick="ftGoStep(1)" data-i18n="ft_next">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── FT STEP 2: Register ── -->
+      <div class="ft-step" id="ft-step-1">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)">
+          <div style="display:flex;align-items:center;gap:10px;padding:20px 24px 16px">
+            <div style="background:var(--blue-50);color:var(--blue-600);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase" data-i18n="ft_s2_tag">STEP 02</div>
+            <div style="font-size:17px;font-weight:600;color:var(--text-primary)" data-i18n="ft_s2_title">Register for a Tax File Number (TIN)</div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="padding:20px 24px">
+            <div style="background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:20px;display:flex;gap:10px">
+              <span style="font-size:18px">🆔</span>
+              <div style="font-size:13px;color:var(--blue-600);line-height:1.6" data-i18n="ft_s2_already">Already registered? If your employer deducts PCB monthly, you're likely already in the system. Log in to <strong>mytax.hasil.gov.my</strong> to check.</div>
+            </div>
+            <div id="ft-register-steps"></div>
+            <div style="background:var(--green-50);border:1px solid var(--green-100);border-radius:var(--radius-md);padding:14px 16px;margin-top:16px;display:flex;gap:10px">
+              <span>✅</span>
+              <div style="font-size:13px;color:var(--green-600);line-height:1.6" data-i18n="ft_s2_tip">Tip: Ask your HR/payroll team for your tax file number — if PCB has been deducted, you're already registered!</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:16px">
+          <button class="btn btn-outline" onclick="ftGoStep(0)" data-i18n="ft_prev">← Back</button>
+          <button class="btn btn-green" onclick="ftGoStep(2)" data-i18n="ft_next">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── FT STEP 3: Documents ── -->
+      <div class="ft-step" id="ft-step-2">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)">
+          <div style="display:flex;align-items:center;gap:10px;padding:20px 24px 16px">
+            <div style="background:var(--amber-50);color:var(--amber-600);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase" data-i18n="ft_s3_tag">STEP 03</div>
+            <div style="font-size:17px;font-weight:600;color:var(--text-primary)" data-i18n="ft_s3_title">Gather Your Documents</div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="padding:20px 24px">
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_ess">Essential</div>
+            <div id="ft-docs-ess" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_rel">For Relief Claims</div>
+            <div id="ft-docs-rel" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_self">Self-Employed Extra</div>
+            <div id="ft-docs-self" style="display:flex;flex-direction:column;gap:8px"></div>
+            <div style="background:var(--amber-50);border:1px solid var(--amber-100);border-radius:var(--radius-md);padding:14px 16px;margin-top:16px;display:flex;gap:10px">
+              <span>📁</span>
+              <div style="font-size:13px;color:var(--amber-600);line-height:1.6" data-i18n="ft_docs_tip">Create a "Tax YA2024" folder in Google Drive and scan everything in. You'll thank yourself later!</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:16px">
+          <button class="btn btn-outline" onclick="ftGoStep(1)" data-i18n="ft_prev">← Back</button>
+          <button class="btn btn-green" onclick="ftGoStep(3)" data-i18n="ft_next">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── FT STEP 4: Fill Form ── -->
+      <div class="ft-step" id="ft-step-3">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)">
+          <div style="display:flex;align-items:center;gap:10px;padding:20px 24px 16px">
+            <div style="background:var(--purple-50);color:var(--purple-600);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase" data-i18n="ft_s4_tag">STEP 04</div>
+            <div style="font-size:17px;font-weight:600;color:var(--text-primary)" data-i18n="ft_s4_title">Log In & Fill the e-Form on MyTax</div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="padding:20px 24px">
+            <div id="ft-form-steps" style="display:flex;flex-direction:column;gap:14px"></div>
+            <div style="background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-md);padding:14px 16px;margin-top:16px;display:flex;gap:10px">
+              <span>🏦</span>
+              <div style="font-size:13px;color:var(--blue-600);line-height:1.6" data-i18n="ft_s4_bank">Enter your correct <strong>bank account number</strong> for refund. LHDN banks it directly within 30–90 days.</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:16px">
+          <button class="btn btn-outline" onclick="ftGoStep(2)" data-i18n="ft_prev">← Back</button>
+          <button class="btn btn-green" onclick="ftGoStep(4)" data-i18n="ft_next">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── FT STEP 5: Submit & Pay ── -->
+      <div class="ft-step" id="ft-step-4">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)">
+          <div style="display:flex;align-items:center;gap:10px;padding:20px 24px 16px">
+            <div style="background:var(--teal-50);color:var(--teal-600);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase" data-i18n="ft_s5_tag">STEP 05</div>
+            <div style="font-size:17px;font-weight:600;color:var(--text-primary)" data-i18n="ft_s5_title">Submit & Pay (If Any)</div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="padding:20px 24px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+              <div style="background:var(--green-50);border:1px solid var(--green-100);border-left:3px solid var(--green-600);border-radius:var(--radius-md);padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--green-600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px" data-i18n="ft_refund_label">Getting a Refund 🎉</div>
+                <div style="font-size:13px;font-weight:600" data-i18n="ft_refund_val">Just submit the form</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px" data-i18n="ft_refund_sub">Banked in within 30–90 days</div>
+              </div>
+              <div style="background:var(--coral-50);border:1px solid var(--coral-100);border-left:3px solid var(--coral-600);border-radius:var(--radius-md);padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--coral-600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px" data-i18n="ft_pay_label">Need to Pay?</div>
+                <div style="font-size:13px;font-weight:600" data-i18n="ft_pay_val">Pay by deadline</div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px" data-i18n="ft_pay_sub">Apr 30 (salaried) · Jun 30 (self-employed)</div>
+              </div>
+            </div>
+            <div id="ft-pay-methods" style="display:flex;flex-direction:column;gap:8px"></div>
+            <div style="background:var(--coral-50);border:1px solid var(--coral-100);border-radius:var(--radius-md);padding:14px 16px;margin-top:16px;display:flex;gap:10px">
+              <span>⚠️</span>
+              <div style="font-size:13px;color:var(--coral-600);line-height:1.6" data-i18n="ft_late_penalty">Late penalty: <strong>10% of tax payable</strong>, rising to 25%+. Always file on time even if estimating!</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:16px">
+          <button class="btn btn-outline" onclick="ftGoStep(3)" data-i18n="ft_prev">← Back</button>
+          <button class="btn btn-green" onclick="ftGoStep(5)" data-i18n="ft_next">Next →</button>
+        </div>
+      </div>
+
+      <!-- ── FT STEP 6: FAQ ── -->
+      <div class="ft-step" id="ft-step-5">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)">
+          <div style="display:flex;align-items:center;gap:10px;padding:20px 24px 16px">
+            <div style="background:var(--amber-50);color:var(--amber-600);border-radius:8px;padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase" data-i18n="ft_s6_tag">STEP 06</div>
+            <div style="font-size:17px;font-weight:600;color:var(--text-primary)" data-i18n="ft_s6_title">FAQ & Key Terms</div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div style="padding:20px 24px">
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px" data-i18n="ft_faq_title">Frequently Asked Questions</div>
+            <div id="ft-faq-list" style="margin-bottom:24px"></div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px" data-i18n="ft_gloss_title">Key Terms</div>
+            <div id="ft-gloss-list" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+          </div>
+        </div>
+
+        <!-- Congrats -->
+        <div style="background:linear-gradient(135deg,var(--green-50),#f0f8e8);border:1.5px solid var(--green-100);border-radius:var(--radius-lg);padding:28px;text-align:center;margin-top:16px">
+          <div style="font-size:48px;margin-bottom:12px">🎉</div>
+          <div style="font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--text-primary);margin-bottom:8px" data-i18n="ft_congrats_h">You're Ready to File!</div>
+          <div style="font-size:14px;color:var(--text-secondary);margin-bottom:20px;max-width:380px;margin-left:auto;margin-right:auto" data-i18n="ft_congrats_p">You now have everything you need. Head to MyTax and get it done — you've got this!</div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a href="https://mytax.hasil.gov.my" target="_blank" class="btn btn-green">🚀 Go to MyTax Portal</a>
+            <button class="btn btn-outline" onclick="switchTab('checklist',document.querySelector('.nav-tab'))" data-i18n="ft_go_checklist">☑ View Relief Checklist</button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:16px">
+          <button class="btn btn-outline" onclick="ftGoStep(4)" data-i18n="ft_prev">← Back</button>
+          <div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
