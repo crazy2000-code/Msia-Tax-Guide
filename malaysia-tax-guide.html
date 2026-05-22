@@ -33,7 +33,7 @@ input,select{font-family:var(--font-body)}
 .page-wrap{padding-bottom:60px}
 
 /* NAV */
-.topnav{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.topnav{background:var(--surface);border-bottom:1px solid var(--border)}
 .topnav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px;flex-wrap:wrap}
 .logo{font-family:var(--font-display);font-size:20px;color:var(--text-primary);display:flex;align-items:center;gap:8px}
 .nav-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -169,6 +169,8 @@ input,select{font-family:var(--font-body)}
 /* TABS */
 .tab-pane{display:none}
 .tab-pane.active{display:block}
+.ft-step{display:none}
+.ft-step.active{display:block}
 
 /* FOOTER */
 .footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
@@ -1165,6 +1167,448 @@ function updateCountdown() {
 }
 
 // ══════════════════════════════════════════════════════
+// FIRST-TIMER STEP NAVIGATION
+// ══════════════════════════════════════════════════════
+let ftCurrentStep = 0;
+
+function ftGoStep(n) {
+  // Hide all steps
+  document.querySelectorAll('.ft-step').forEach(s => s.classList.remove('active'));
+  // Show only the target step
+  const target = document.getElementById('ft-step-' + n);
+  if (target) target.classList.add('active');
+  ftCurrentStep = n;
+  // Update step nav buttons
+  for (let i = 0; i < 6; i++) {
+    const btn = document.getElementById('ftstep-btn-' + i);
+    if (btn) btn.classList.toggle('active', i === n);
+  }
+  // Scroll to top of first-timer section
+  document.getElementById('tab-firsttime').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── First-Timer: Eligibility Checker ──
+function ftCheckElig(type) {
+  const t = T[lang];
+  const results = {
+    a: {bg:'#EAF3DE', border:'#C0DD97', color:'#27500A', icon:'✅', text: t.ft_elig_a},
+    b: {bg:'#FAEEDA', border:'#FAC775', color:'#633806', icon:'⚠️', text: t.ft_elig_b},
+    c: {bg:'#E6F1FB', border:'#B5D4F4', color:'#0C447C', icon:'📋', text: t.ft_elig_c},
+    d: {bg:'#FAECE7', border:'#F5C4B3', color:'#712B13', icon:'💼', text: t.ft_elig_d},
+  };
+  const r = results[type];
+  const res = document.getElementById('ft-checker-result');
+  res.style.cssText = `display:flex;gap:10px;margin-top:12px;padding:12px 14px;border-radius:var(--radius-md);font-size:13px;line-height:1.6;background:${r.bg};border-color:${r.border};color:${r.color}`;
+  res.innerHTML = `<span>${r.icon}</span><span>${r.text}</span>`;
+  // Mark selected radio
+  document.querySelectorAll('.ft-elig-opt').forEach(el => el.classList.remove('active'));
+  const sel = document.getElementById('ft-elig-'+type);
+  if (sel) sel.classList.add('active');
+}
+
+// ── First-Timer: Doc Checklist ──
+let ftDocChecked = {};
+function ftToggleDoc(key, el) {
+  ftDocChecked[key] = !ftDocChecked[key];
+  el.style.background = ftDocChecked[key] ? 'rgba(59,109,17,0.06)' : '';
+  el.style.borderColor = ftDocChecked[key] ? 'rgba(59,109,17,0.3)' : 'var(--border)';
+  const check = el.querySelector('.ft-doc-check');
+  if (check) check.textContent = ftDocChecked[key] ? '✓' : '';
+}
+
+// ── First-Timer: FAQ toggle ──
+function ftToggleFaq(i) {
+  const item = document.getElementById('ft-faq-item-'+i);
+  item.classList.toggle('open');
+  const ans = document.getElementById('ft-faq-ans-'+i);
+  ans.style.display = item.classList.contains('open') ? 'block' : 'none';
+  const arrow = document.getElementById('ft-faq-arrow-'+i);
+  arrow.textContent = item.classList.contains('open') ? '⌃' : '⌄';
+}
+
+// ── First-Timer: Build dynamic content ──
+function buildFirstTimer() {
+  const t = T[lang];
+
+  // Eligibility options
+  const optsEl = document.getElementById('ft-checker-opts');
+  if (optsEl) {
+    const opts = [
+      {k:'a', label: t.ft_elig_opt_a},
+      {k:'b', label: t.ft_elig_opt_b},
+      {k:'c', label: t.ft_elig_opt_c},
+      {k:'d', label: t.ft_elig_opt_d},
+    ];
+    optsEl.innerHTML = opts.map(o => `
+      <div id="ft-elig-${o.k}" class="ft-elig-opt" onclick="ftCheckElig('${o.k}')"
+        style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius-md);border:1px solid var(--border);cursor:pointer;background:var(--surface);transition:all .15s;font-size:13px;color:var(--text-secondary)">
+        <input type="radio" name="ft-elig" style="accent-color:var(--green-600)" />
+        <span>${o.label}</span>
+      </div>`).join('');
+  }
+
+  // Register steps
+  const regEl = document.getElementById('ft-register-steps');
+  if (regEl) {
+    regEl.innerHTML = t.ft_reg_steps.map((s, i) => `
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:14px">
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--blue-50);color:var(--blue-600);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">${i+1}</div>
+        <div style="flex:1;padding-top:3px">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:3px">${s.title}</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">${s.desc}</div>
+          ${s.link ? `<a href="${s.link}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue-600);margin-top:5px;background:var(--blue-50);padding:3px 9px;border-radius:6px;border:1px solid rgba(24,95,165,0.15)">🔗 ${s.link}</a>` : ''}
+        </div>
+      </div>`).join('');
+  }
+
+  // Documents
+  ['ess','rel','self'].forEach(group => {
+    const el = document.getElementById('ft-docs-'+group);
+    if (!el) return;
+    const docs = t['ft_docs_'+group];
+    el.innerHTML = docs.map((d, i) => {
+      const key = 'ft-'+group+'-'+i;
+      return `<div onclick="ftToggleDoc('${key}',this)"
+        style="display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:11px 14px;cursor:pointer;transition:all .15s">
+        <div class="ft-doc-check" style="width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green-600);flex-shrink:0"></div>
+        <span style="font-size:16px;flex-shrink:0">${d.icon}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500;color:var(--text-primary)">${d.name}</div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:1px">${d.hint}</div>
+        </div>
+        <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;color:${d.tc};background:${d.tb};flex-shrink:0">${d.tag}</span>
+      </div>`;
+    }).join('');
+  });
+
+  // Form steps
+  const formEl = document.getElementById('ft-form-steps');
+  if (formEl) {
+    formEl.innerHTML = t.ft_form_steps.map((s, i) => `
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--purple-50);color:var(--purple-600);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px">${i+1}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:3px">${s.title}</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">${s.desc}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Payment methods
+  const payEl = document.getElementById('ft-pay-methods');
+  if (payEl) {
+    payEl.innerHTML = t.ft_pay_methods.map(m => `
+      <div style="display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px">
+        <span style="font-size:18px;flex-shrink:0">${m.icon}</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px">${m.title}</div>
+          <div style="font-size:12px;color:var(--text-secondary)">${m.desc}</div>
+        </div>
+        <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--green-50);color:var(--green-600);flex-shrink:0;white-space:nowrap">${m.badge}</span>
+      </div>`).join('');
+  }
+
+  // FAQ
+  const faqEl = document.getElementById('ft-faq-list');
+  if (faqEl) {
+    faqEl.innerHTML = t.ft_faq.map((f, i) => `
+      <div id="ft-faq-item-${i}" style="border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:8px;overflow:hidden">
+        <div onclick="ftToggleFaq(${i})" style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-primary);gap:12px">
+          <span>${f.q}</span>
+          <span id="ft-faq-arrow-${i}" style="font-size:16px;color:var(--text-muted)">⌄</span>
+        </div>
+        <div id="ft-faq-ans-${i}" style="display:none;padding:0 16px 13px;font-size:13px;color:var(--text-secondary);line-height:1.6;border-top:1px solid var(--border);padding-top:12px">${f.a}</div>
+      </div>`).join('');
+  }
+
+  // Glossary
+  const glossEl = document.getElementById('ft-gloss-list');
+  if (glossEl) {
+    glossEl.innerHTML = t.ft_gloss.map(g => `
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 14px">
+        <div style="font-size:11px;font-weight:700;color:var(--green-600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">${g.term}</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">${g.def}</div>
+      </div>`).join('');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// FIRST-TIMER TRANSLATIONS — append to T object
+// ══════════════════════════════════════════════════════
+T.en.tab_firsttime = '🌱 First-Timer';
+T.en.ft_title = "First Time Filing? Here's Your Complete Roadmap.";
+T.en.ft_intro = "Follow these 6 steps in order. By the end, you'll know exactly what to do — and won't miss a single ringgit of relief.";
+T.en.ft_s1_nav='1 · Need to File?'; T.en.ft_s2_nav='2 · Register'; T.en.ft_s3_nav='3 · Documents';
+T.en.ft_s4_nav='4 · Fill Form'; T.en.ft_s5_nav='5 · Submit'; T.en.ft_s6_nav='6 · FAQ';
+T.en.ft_s1_tag='STEP 01'; T.en.ft_s1_title='Do I Need to File Tax?';
+T.en.ft_s1_alert='You <strong>must file</strong> if your annual income exceeds <strong>RM 34,000</strong> after EPF — or RM 38,202 before EPF. (~RM 2,833/month)';
+T.en.ft_salaried='Salaried'; T.en.ft_salaried_sub='After EPF · Form BE';
+T.en.ft_self='Self-Employed'; T.en.ft_self_sub='Net profit · Form B';
+T.en.ft_checker_q='Quick Check — Select your situation:';
+T.en.ft_elig_opt_a='My income is below RM 34,000/yr after EPF';
+T.en.ft_elig_opt_b='My income is RM 34,000–RM 48,000/yr after EPF';
+T.en.ft_elig_opt_c='My income is above RM 48,000/yr after EPF';
+T.en.ft_elig_opt_d='I am self-employed / freelancer';
+T.en.ft_elig_a='You are <strong>not required</strong> to file — but registering voluntarily is a good habit to start early!';
+T.en.ft_elig_b='<strong>You must file!</strong> Good news — you may get a refund after claiming all your reliefs.';
+T.en.ft_elig_c='<strong>You must file.</strong> Claim all eligible reliefs to reduce your chargeable income.';
+T.en.ft_elig_d='<strong>Self-employed:</strong> Use <strong>Form B</strong> (not BE). Deduct business expenses before tax. Deadline: 30 June.';
+T.en.ft_s2_tag='STEP 02'; T.en.ft_s2_title='Register for a Tax File Number (TIN)';
+T.en.ft_s2_already='Already registered? If your employer deducts PCB monthly, you\'re likely already in the system. Log in to <strong>mytax.hasil.gov.my</strong> to check.';
+T.en.ft_s2_tip='Tip: Ask your HR/payroll team for your tax file number — if PCB has been deducted, you\'re already registered!';
+T.en.ft_s3_tag='STEP 03'; T.en.ft_s3_title='Gather Your Documents';
+T.en.ft_docs_ess='Essential'; T.en.ft_docs_rel='For Relief Claims'; T.en.ft_docs_self_label='Self-Employed Extra';
+T.en.ft_docs_tip='Create a "Tax YA2024" folder in Google Drive and scan everything in. You\'ll thank yourself later!';
+T.en.ft_s4_tag='STEP 04'; T.en.ft_s4_title='Log In & Fill the e-Form on MyTax';
+T.en.ft_s4_bank='Enter your correct <strong>bank account number</strong> for refund. LHDN banks it directly within 30–90 days.';
+T.en.ft_s5_tag='STEP 05'; T.en.ft_s5_title='Submit & Pay (If Any)';
+T.en.ft_refund_label='Getting a Refund 🎉'; T.en.ft_refund_val='Just submit the form'; T.en.ft_refund_sub='Banked in within 30–90 days';
+T.en.ft_pay_label='Need to Pay?'; T.en.ft_pay_val='Pay by deadline'; T.en.ft_pay_sub='Apr 30 (salaried) · Jun 30 (self-employed)';
+T.en.ft_late_penalty='Late penalty: <strong>10% of tax payable</strong>, rising to 25%+. Always file on time!';
+T.en.ft_s6_tag='STEP 06'; T.en.ft_s6_title='FAQ & Key Terms';
+T.en.ft_faq_title='Frequently Asked Questions'; T.en.ft_gloss_title='Key Terms';
+T.en.ft_congrats_h="You're Ready to File!"; T.en.ft_congrats_p="You now have everything you need. Head to MyTax and get it done!"; T.en.ft_go_checklist='☑ View Relief Checklist';
+T.en.ft_next='Next →'; T.en.ft_prev='← Back';
+T.en.ft_reg_steps=[
+  {title:'Online via MyTax Portal (Easiest)', desc:'Go to mytax.hasil.gov.my → Click "Daftar" → Choose "Individu" → Fill in your IC. TIN created instantly!', link:'https://mytax.hasil.gov.my'},
+  {title:'Via e-Daftar (Alternative)', desc:'Fill in IC number and personal details on LHDN\'s e-Daftar. TIN sent via email or SMS.', link:''},
+  {title:'Walk-in at LHDN Office', desc:'Bring MyKad (original + copy). Staff will register you on the spot.', link:''},
+];
+T.en.ft_form_steps=[
+  {title:'Go to MyTax & Select e-Filing', desc:'Log in at mytax.hasil.gov.my → choose e-BE (salaried) or e-B (self-employed) → Year of Assessment 2024.'},
+  {title:'Part A — Personal Info', desc:'Name, IC, address, marital status, bank account. Most is auto-filled — just verify.'},
+  {title:'Part B — Income', desc:'Enter total employment income from EA Form. Self-employed: gross income minus expenses. Include rental, dividends, etc.'},
+  {title:'Part C — Tax Reliefs', desc:'The most important part! Enter EPF, insurance, lifestyle, medical, education, children. Use our Relief Checklist!'},
+  {title:'Part D — PCB / MTD Rebates', desc:'Enter PCB deducted (from payslip or EA Form). Add zakat if applicable — direct rebate, not just relief!'},
+  {title:'Review & Submit', desc:'System auto-calculates tax. Check refund (+) or balance due (−). Double-check then submit!'},
+];
+T.en.ft_pay_methods=[
+  {icon:'💳', title:'FPX Online Banking (Recommended)', desc:'Pay via MyTax portal. Instant confirmation, 24/7.', badge:'✓ Instant'},
+  {icon:'🌐', title:'ByrHASIL Portal', desc:'byrhasil.hasil.gov.my — credit/debit card, online banking, ATM.', badge:'Online'},
+  {icon:'📬', title:'Cheque / Bank Draft', desc:'Payable to "Ketua Pengarah Hasil Dalam Negeri". Drop at LHDN office.', badge:'3–5 days'},
+];
+T.en.ft_faq=[
+  {q:'What is PCB / MTD?', a:'Tax your employer deducts monthly from salary. It counts toward your annual tax — if too much was deducted, you get a refund!'},
+  {q:'What is an EA Form?', a:'Annual income statement from your employer showing total salary and PCB deducted. Employers must provide it by end of February each year.'},
+  {q:'I have multiple employers — what do I do?', a:'Get EA Forms from all employers, add up total income and PCB, then enter the combined totals when filing.'},
+  {q:'What if I make a mistake after submitting?', a:'Submit an amended return (Borang Pindaan) within 6 months. Log in to MyTax → select the year → choose "Pindaan".'},
+  {q:'When do I get my refund?', a:'Typically 30–90 days after e-Filing submission. Ensure your bank account is correct. Track status on MyTax.'},
+  {q:'What happens if I don\'t file?', a:'Fine of RM 200–RM 20,000 and/or imprisonment. Always file even if you think you owe no tax!'},
+];
+T.en.ft_gloss=[
+  {term:'YA (Year of Assessment)', def:'The year income is assessed. YA 2024 = Jan–Dec 2024 income.'},
+  {term:'TIN', def:'Your unique tax file number from LHDN. Format: SG 12345678901.'},
+  {term:'PCB / MTD', def:'Monthly salary tax deduction — treated as advance tax payment.'},
+  {term:'EA Form', def:'Annual income statement from employer. Required for filing.'},
+  {term:'Tax Relief', def:'Deductions reducing chargeable income — EPF, insurance, lifestyle, etc.'},
+  {term:'Tax Rebate', def:'Direct reduction of tax payable — zakat, RM 400 low-income rebate.'},
+];
+T.en.ft_docs_ess=[
+  {icon:'🪪', name:'MyKad / IC (copy)', hint:'For identity verification', tag:'Required', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+  {icon:'📄', name:'EA Form / CP8A', hint:'From employer — total salary & PCB deducted', tag:'Salaried', tc:'var(--green-600)', tb:'var(--green-50)'},
+  {icon:'🔢', name:'Tax File Number (TIN)', hint:'Get from LHDN if you don\'t have one', tag:'Required', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+  {icon:'🏦', name:'Bank Account Number', hint:'For direct refund deposit', tag:'Required', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+];
+T.en.ft_docs_rel=[
+  {icon:'💼', name:'EPF Annual Statement', hint:'From KWSP portal or counter', tag:'RM 4,000 relief', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🏥', name:'Medical Insurance Policy', hint:'Annual premium receipt', tag:'RM 3,000 relief', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🧾', name:'Lifestyle Receipts', hint:'Books, internet, phone, gym, sports', tag:'RM 2,500 relief', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'📋', name:'Medical Exam Receipts', hint:'Clinic / hospital receipts', tag:'RM 1,000 relief', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🎓', name:'Course / Tuition Receipts', hint:'Upskilling, professional certs', tag:'RM 7,000 relief', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+];
+T.en.ft_docs_self=[
+  {icon:'📊', name:'Income & Expense Records', hint:'Invoices, receipts, P&L statement', tag:'Self-Employed', tc:'var(--amber-600)', tb:'var(--amber-50)'},
+  {icon:'🧾', name:'Business Expense Receipts', hint:'Equipment, travel, office, subscriptions', tag:'Deductible', tc:'var(--amber-600)', tb:'var(--amber-50)'},
+];
+
+// Chinese translations
+T.zh.tab_firsttime = '🌱 新手指南';
+T.zh.ft_title = '第一次报税？这是你的完整攻略。';
+T.zh.ft_intro = '按照这 6 个步骤逐一完成，报完税你将不会漏掉任何一分减税额。';
+T.zh.ft_s1_nav='1 · 需要报税？'; T.zh.ft_s2_nav='2 · 注册'; T.zh.ft_s3_nav='3 · 准备文件';
+T.zh.ft_s4_nav='4 · 填写表格'; T.zh.ft_s5_nav='5 · 提交'; T.zh.ft_s6_nav='6 · 常见问题';
+T.zh.ft_s1_tag='第 01 步'; T.zh.ft_s1_title='我需要报税吗？';
+T.zh.ft_s1_alert='若你的年收入在扣除公积金后超过 <strong>RM 34,000</strong>（扣前约 RM 38,202），你<strong>必须申报</strong>所得税。（约每月 RM 2,833）';
+T.zh.ft_salaried='打工族'; T.zh.ft_salaried_sub='扣除公积金后 · BE 表格';
+T.zh.ft_self='自雇人士'; T.zh.ft_self_sub='净收入 · B 表格';
+T.zh.ft_checker_q='快速检查 — 选择你的情况：';
+T.zh.ft_elig_opt_a='我的年收入（扣公积金后）低于 RM 34,000';
+T.zh.ft_elig_opt_b='我的年收入（扣公积金后）介于 RM 34,000–RM 48,000';
+T.zh.ft_elig_opt_c='我的年收入（扣公积金后）超过 RM 48,000';
+T.zh.ft_elig_opt_d='我是自雇 / 自由工作者';
+T.zh.ft_elig_a='你<strong>不需要</strong>申报 — 但自愿注册是个好习惯！';
+T.zh.ft_elig_b='<strong>你必须申报！</strong> 好消息是 — claim 完所有减税额后你可能有退税！';
+T.zh.ft_elig_c='<strong>你必须申报。</strong> Claim 所有合格减税额来降低应税收入。';
+T.zh.ft_elig_d='<strong>自雇人士：</strong>使用 <strong>B 表格</strong>（不是 BE）。可扣除营业成本。截止：6 月 30 日。';
+T.zh.ft_s2_tag='第 02 步'; T.zh.ft_s2_title='注册税务档案号码（TIN）';
+T.zh.ft_s2_already='已经注册？若雇主每月扣除 PCB，你很可能已在系统中。登录 <strong>mytax.hasil.gov.my</strong> 检查。';
+T.zh.ft_s2_tip='小提示：向 HR 询问你的税务档案号码 — 若已扣 PCB，你已注册！';
+T.zh.ft_s3_tag='第 03 步'; T.zh.ft_s3_title='准备好所需文件';
+T.zh.ft_docs_ess='必备文件'; T.zh.ft_docs_rel='减税申报所需'; T.zh.ft_docs_self_label='自雇人士额外';
+T.zh.ft_docs_tip='在 Google Drive 创建"Tax YA2024"文件夹，把所有文件扫描上传进去！';
+T.zh.ft_s4_tag='第 04 步'; T.zh.ft_s4_title='登录 MyTax 填写报税表格';
+T.zh.ft_s4_bank='确保填写正确<strong>银行账号</strong>。LHDN 会在 30–90 天内直接退税到你的账户。';
+T.zh.ft_s5_tag='第 05 步'; T.zh.ft_s5_title='提交并缴税（如需要）';
+T.zh.ft_refund_label='要退税 🎉'; T.zh.ft_refund_val='直接提交即可'; T.zh.ft_refund_sub='30–90 天内存入账户';
+T.zh.ft_pay_label='需要缴税？'; T.zh.ft_pay_val='在截止日前缴清'; T.zh.ft_pay_sub='4 月 30 日（打工）· 6 月 30 日（自雇）';
+T.zh.ft_late_penalty='迟缴罚款：<strong>应缴税款的 10%</strong>，可增至 25% 以上。一定要准时！';
+T.zh.ft_s6_tag='第 06 步'; T.zh.ft_s6_title='常见问题 & 关键术语';
+T.zh.ft_faq_title='常见问题 FAQ'; T.zh.ft_gloss_title='关键术语';
+T.zh.ft_congrats_h='准备好了，开始报税吧！'; T.zh.ft_congrats_p='你现在已掌握所有报税知识，前往 MyTax 提交吧！'; T.zh.ft_go_checklist='☑ 查看减税清单';
+T.zh.ft_next='下一步 →'; T.zh.ft_prev='← 返回';
+T.zh.ft_reg_steps=[
+  {title:'通过 MyTax 网站在线注册（最简单）', desc:'前往 mytax.hasil.gov.my → 点"Daftar"→ 选"Individu"→ 填写 IC 资料。TIN 即时生成！', link:'https://mytax.hasil.gov.my'},
+  {title:'通过 e-Daftar（备选）', desc:'在 LHDN 的 e-Daftar 系统填写 IC 和个人资料。TIN 通过 email 或 SMS 发送。', link:''},
+  {title:'亲自前往 LHDN 办公室', desc:'携带 MyKad（正本 + 复印件），工作人员当场为你注册。', link:''},
+];
+T.zh.ft_form_steps=[
+  {title:'登录 MyTax，选择 e-Filing', desc:'前往 mytax.hasil.gov.my → 选 e-BE（打工族）或 e-B（自雇）→ 选评估年度 2024。'},
+  {title:'A 部分 — 个人资料', desc:'姓名、IC、地址、婚姻状况、银行账号。大部分自动填入，核实即可。'},
+  {title:'B 部分 — 收入', desc:'填入 EA 表格的总受雇收入。自雇：总营业收入减可扣除开支。包括租金、股息等。'},
+  {title:'C 部分 — 减税额', desc:'最重要！填写公积金、保险、生活方式、医疗、教育、子女等。参考我们的减税清单！'},
+  {title:'D 部分 — PCB / MTD 回扣', desc:'填入 PCB 总额（来自薪条或 EA 表格）。天课也填在这里 — 直接回扣，不只是减税额！'},
+  {title:'检查并提交', desc:'系统自动计算税款。查看退税（+）或补缴（−）金额。确认无误后提交！'},
+];
+T.zh.ft_pay_methods=[
+  {icon:'💳', title:'FPX 网络银行（推荐）', desc:'通过 MyTax 网站付款，即时确认，24/7 可用。', badge:'✓ 即时'},
+  {icon:'🌐', title:'ByrHASIL 网站', desc:'byrhasil.hasil.gov.my — 信用卡、网络银行、ATM 皆可。', badge:'在线'},
+  {icon:'📬', title:'支票 / 银行汇票', desc:'抬头：Ketua Pengarah Hasil Dalam Negeri，在 LHDN 办公室提交。', badge:'3–5 天'},
+];
+T.zh.ft_faq=[
+  {q:'什么是 PCB / MTD？', a:'雇主每月从薪水中扣除的预付税款。扣多了就退税给你！'},
+  {q:'什么是 EA 表格？', a:'雇主出具的年度收入报表，显示总薪资和 PCB 扣除额。雇主必须在每年 2 月底前提供。'},
+  {q:'有多个雇主怎么办？', a:'向所有雇主索取 EA 表格，把总收入和 PCB 加起来，填写时输入综合总额。'},
+  {q:'提交后发现填错了怎么办？', a:'在 6 个月内提交修正表格（Borang Pindaan）。登录 MyTax → 选年度 → 选"Pindaan"。'},
+  {q:'什么时候收到退税？', a:'e-Filing 通常 30–90 天内退税。确保银行账号正确，可在 MyTax 追踪状态。'},
+  {q:'不报税会怎样？', a:'罚款 RM 200–RM 20,000 甚至监禁。就算觉得不需缴税也必须申报！'},
+];
+T.zh.ft_gloss=[
+  {term:'YA（评估年度）', def:'收入被评估的年度。YA 2024 = 2024 年 1–12 月收入。'},
+  {term:'TIN', def:'LHDN 分配的唯一税务档案号码。格式：SG 12345678901。'},
+  {term:'PCB / MTD', def:'每月薪资预扣税，作为预付税款。'},
+  {term:'EA 表格', def:'雇主出具的年度收入报表，报税必需。'},
+  {term:'减税额', def:'降低应税收入的扣除项 — 公积金、保险、生活方式等。'},
+  {term:'税务回扣', def:'直接减少应缴税款 — 天课、低收入 RM 400 回扣。'},
+];
+T.zh.ft_docs_ess=[
+  {icon:'🪪', name:'MyKad / 身份证（复印件）', hint:'用于身份验证', tag:'必备', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+  {icon:'📄', name:'EA 表格 / CP8A', hint:'雇主提供，显示总薪资及 PCB', tag:'打工族', tc:'var(--green-600)', tb:'var(--green-50)'},
+  {icon:'🔢', name:'税务档案号码（TIN）', hint:'如没有请向 LHDN 申请', tag:'必备', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+  {icon:'🏦', name:'银行账号', hint:'用于退税直接存款', tag:'必备', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+];
+T.zh.ft_docs_rel=[
+  {icon:'💼', name:'公积金（EPF）年度报表', hint:'从 KWSP 网站或柜台获取', tag:'最高 RM 4,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🏥', name:'医疗保险保单', hint:'年度保费收据', tag:'最高 RM 3,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🧾', name:'生活方式消费收据', hint:'书籍、网络、手机、健身房', tag:'最高 RM 2,500', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'📋', name:'体检收据', hint:'诊所 / 医院收据', tag:'最高 RM 1,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🎓', name:'课程 / 学费收据', hint:'技能提升、专业认证', tag:'最高 RM 7,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+];
+T.zh.ft_docs_self=[
+  {icon:'📊', name:'收入 & 支出记录', hint:'发票、收据、损益表', tag:'自雇人士', tc:'var(--amber-600)', tb:'var(--amber-50)'},
+  {icon:'🧾', name:'营业开支收据', hint:'设备、差旅、办公室、订阅', tag:'可扣除', tc:'var(--amber-600)', tb:'var(--amber-50)'},
+];
+
+// BM translations
+T.ms.tab_firsttime = '🌱 Pemula';
+T.ms.ft_title = 'Pertama Kali Hantar Cukai? Ini Panduan Lengkap Anda.';
+T.ms.ft_intro = 'Ikut 6 langkah ini mengikut urutan. Selepas selesai, anda tahu tepat apa perlu dibuat — dan tidak akan terlepas sebarang pelepasan cukai!';
+T.ms.ft_s1_nav='1 · Perlu Cukai?'; T.ms.ft_s2_nav='2 · Daftar'; T.ms.ft_s3_nav='3 · Dokumen';
+T.ms.ft_s4_nav='4 · Isi Borang'; T.ms.ft_s5_nav='5 · Hantar'; T.ms.ft_s6_nav='6 · Soalan Lazim';
+T.ms.ft_s1_tag='LANGKAH 01'; T.ms.ft_s1_title='Perlukah Saya Hantar Cukai?';
+T.ms.ft_s1_alert='Anda <strong>mesti hantar</strong> jika pendapatan tahunan melebihi <strong>RM 34,000</strong> selepas KWSP — atau RM 38,202 sebelum KWSP. (~RM 2,833/bulan)';
+T.ms.ft_salaried='Pekerja Bergaji'; T.ms.ft_salaried_sub='Selepas KWSP · Borang BE';
+T.ms.ft_self='Bekerja Sendiri'; T.ms.ft_self_sub='Keuntungan bersih · Borang B';
+T.ms.ft_checker_q='Semak Pantas — Pilih situasi anda:';
+T.ms.ft_elig_opt_a='Pendapatan saya di bawah RM 34,000/tahun selepas KWSP';
+T.ms.ft_elig_opt_b='Pendapatan saya RM 34,000–RM 48,000/tahun selepas KWSP';
+T.ms.ft_elig_opt_c='Pendapatan saya melebihi RM 48,000/tahun selepas KWSP';
+T.ms.ft_elig_opt_d='Saya bekerja sendiri / freelancer';
+T.ms.ft_elig_a='Anda <strong>tidak perlu</strong> hantar — tetapi mendaftar secara sukarela adalah tabiat yang baik!';
+T.ms.ft_elig_b='<strong>Anda mesti hantar!</strong> Berita baik — anda mungkin dapat bayaran balik selepas menuntut semua pelepasan!';
+T.ms.ft_elig_c='<strong>Anda mesti hantar.</strong> Tuntut semua pelepasan layak untuk kurangkan pendapatan bercukai.';
+T.ms.ft_elig_d='<strong>Bekerja sendiri:</strong> Guna <strong>Borang B</strong> (bukan BE). Tolak perbelanjaan perniagaan. Tarikh akhir: 30 Jun.';
+T.ms.ft_s2_tag='LANGKAH 02'; T.ms.ft_s2_title='Daftar Nombor Fail Cukai (TIN)';
+T.ms.ft_s2_already='Sudah berdaftar? Jika majikan potongan PCB bulanan, anda mungkin sudah dalam sistem. Log masuk ke <strong>mytax.hasil.gov.my</strong> untuk semak.';
+T.ms.ft_s2_tip='Tip: Tanya HR/gaji anda untuk nombor fail cukai — jika PCB telah dipotong, anda sudah berdaftar!';
+T.ms.ft_s3_tag='LANGKAH 03'; T.ms.ft_s3_title='Kumpulkan Dokumen Anda';
+T.ms.ft_docs_ess='Dokumen Asas'; T.ms.ft_docs_rel='Untuk Tuntutan Pelepasan'; T.ms.ft_docs_self_label='Tambahan Bekerja Sendiri';
+T.ms.ft_docs_tip='Buat folder "Tax YA2024" dalam Google Drive dan imbas semua dokumen ke sana!';
+T.ms.ft_s4_tag='LANGKAH 04'; T.ms.ft_s4_title='Log Masuk & Isi Borang e-Filing di MyTax';
+T.ms.ft_s4_bank='Pastikan <strong>nombor akaun bank betul</strong>. LHDN akan pindah bayaran balik dalam 30–90 hari.';
+T.ms.ft_s5_tag='LANGKAH 05'; T.ms.ft_s5_title='Hantar & Bayar (Jika Ada)';
+T.ms.ft_refund_label='Dapat Bayaran Balik 🎉'; T.ms.ft_refund_val='Hantar borang sahaja'; T.ms.ft_refund_sub='Dikreditkan dalam 30–90 hari';
+T.ms.ft_pay_label='Perlu Bayar?'; T.ms.ft_pay_val='Bayar sebelum tarikh akhir'; T.ms.ft_pay_sub='30 Apr (bergaji) · 30 Jun (sendiri)';
+T.ms.ft_late_penalty='Penalti lewat: <strong>10% daripada cukai terutang</strong>, boleh naik kepada 25%+. Sentiasa hantar tepat masa!';
+T.ms.ft_s6_tag='LANGKAH 06'; T.ms.ft_s6_title='Soalan Lazim & Istilah Penting';
+T.ms.ft_faq_title='Soalan Lazim (FAQ)'; T.ms.ft_gloss_title='Istilah Penting';
+T.ms.ft_congrats_h='Anda Bersedia untuk Hantar Cukai!'; T.ms.ft_congrats_p='Anda kini tahu semua yang perlu. Pergi ke MyTax dan selesaikannya!'; T.ms.ft_go_checklist='☑ Lihat Senarai Semak';
+T.ms.ft_next='Seterusnya →'; T.ms.ft_prev='← Kembali';
+T.ms.ft_reg_steps=[
+  {title:'Dalam Talian via Portal MyTax (Paling Mudah)', desc:'Pergi ke mytax.hasil.gov.my → Klik "Daftar" → Pilih "Individu" → Isi maklumat IC. TIN dibuat serta-merta!', link:'https://mytax.hasil.gov.my'},
+  {title:'Melalui e-Daftar (Alternatif)', desc:'Isi nombor IC dan maklumat peribadi di sistem e-Daftar LHDN. TIN dihantar melalui e-mel atau SMS.', link:''},
+  {title:'Pergi Terus ke Pejabat LHDN', desc:'Bawa MyKad (asal + salinan). Kakitangan akan daftarkan anda di sana.', link:''},
+];
+T.ms.ft_form_steps=[
+  {title:'Pergi ke MyTax, Pilih e-Filing', desc:'Log masuk di mytax.hasil.gov.my → pilih e-BE (bergaji) atau e-B (sendiri) → Tahun Taksiran 2024.'},
+  {title:'Bahagian A — Maklumat Peribadi', desc:'Nama, IC, alamat, status perkahwinan, akaun bank. Kebanyakan diisi auto — sahkan sahaja.'},
+  {title:'Bahagian B — Pendapatan', desc:'Masukkan jumlah pendapatan dari Borang EA. Bekerja sendiri: pendapatan kasar tolak perbelanjaan. Sertakan sewa, dividen, dll.'},
+  {title:'Bahagian C — Pelepasan Cukai', desc:'Bahagian paling penting! Masukkan KWSP, insurans, gaya hidup, perubatan, pendidikan, anak. Rujuk Senarai Semak kami!'},
+  {title:'Bahagian D — Rebat PCB / MTD', desc:'Masukkan jumlah PCB (dari slip gaji atau Borang EA). Tambah zakat jika berkenaan — rebat terus!'},
+  {title:'Semak & Hantar', desc:'Sistem kira cukai secara auto. Semak bayaran balik (+) atau baki perlu dibayar (−). Hantar selepas disahkan!'},
+];
+T.ms.ft_pay_methods=[
+  {icon:'💳', title:'FPX Perbankan Dalam Talian (Disyorkan)', desc:'Bayar melalui portal MyTax. Pengesahan segera, tersedia 24/7.', badge:'✓ Serta-merta'},
+  {icon:'🌐', title:'Portal ByrHASIL', desc:'byrhasil.hasil.gov.my — kad kredit/debit, perbankan dalam talian, ATM.', badge:'Dalam talian'},
+  {icon:'📬', title:'Cek / Draf Bank', desc:'Atas nama: Ketua Pengarah Hasil Dalam Negeri. Hantar ke pejabat LHDN.', badge:'3–5 hari'},
+];
+T.ms.ft_faq=[
+  {q:'Apa itu PCB / MTD?', a:'Cukai yang dipotong majikan dari gaji bulanan anda. Jika terlalu banyak dipotong, anda akan dapat bayaran balik!'},
+  {q:'Apa itu Borang EA?', a:'Penyata pendapatan tahunan dari majikan menunjukkan jumlah gaji dan PCB yang dipotong. Mesti diberikan sebelum akhir Februari setiap tahun.'},
+  {q:'Saya ada beberapa majikan — apa perlu buat?', a:'Dapatkan Borang EA dari semua majikan, tambah jumlah pendapatan dan PCB, masukkan jumlah gabungan semasa menghantar.'},
+  {q:'Bagaimana jika saya buat kesilapan selepas hantar?', a:'Hantar borang pindaan dalam 6 bulan. Log masuk ke MyTax → pilih tahun → pilih "Pindaan".'},
+  {q:'Bila saya akan terima bayaran balik?', a:'Biasanya 30–90 hari selepas e-Filing. Pastikan nombor akaun betul. Semak status di MyTax.'},
+  {q:'Apa berlaku jika saya tidak hantar cukai?', a:'Denda RM 200–RM 20,000 dan/atau penjara. Sentiasa hantar walaupun rasa tidak perlu bayar cukai!'},
+];
+T.ms.ft_gloss=[
+  {term:'YA (Tahun Taksiran)', def:'Tahun pendapatan dinilai. YA 2024 = Jan–Dis 2024.'},
+  {term:'TIN', def:'Nombor fail cukai unik dari LHDN. Format: SG 12345678901.'},
+  {term:'PCB / MTD', def:'Potongan cukai bulanan dari gaji — bayaran cukai pendahuluan.'},
+  {term:'Borang EA', def:'Penyata pendapatan tahunan dari majikan. Diperlukan untuk menghantar cukai.'},
+  {term:'Pelepasan Cukai', def:'Potongan yang kurangkan pendapatan bercukai — KWSP, insurans, gaya hidup, dll.'},
+  {term:'Rebat Cukai', def:'Pengurangan terus cukai terutang — zakat, rebat RM 400 pendapatan rendah.'},
+];
+T.ms.ft_docs_ess=[
+  {icon:'🪪', name:'MyKad / IC (salinan)', hint:'Untuk pengesahan identiti', tag:'Wajib', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+  {icon:'📄', name:'Borang EA / CP8A', hint:'Dari majikan — jumlah gaji & PCB', tag:'Bergaji', tc:'var(--green-600)', tb:'var(--green-50)'},
+  {icon:'🔢', name:'Nombor Fail Cukai (TIN)', hint:'Dapatkan dari LHDN jika belum ada', tag:'Wajib', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+  {icon:'🏦', name:'Nombor Akaun Bank', hint:'Untuk pemindahan bayaran balik', tag:'Wajib', tc:'var(--coral-600)', tb:'var(--coral-50)'},
+];
+T.ms.ft_docs_rel=[
+  {icon:'💼', name:'Penyata Tahunan KWSP', hint:'Dari portal KWSP atau kaunter', tag:'Pelepasan RM 4,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🏥', name:'Polisi Insurans Perubatan', hint:'Resit premium tahunan', tag:'Pelepasan RM 3,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🧾', name:'Resit Gaya Hidup', hint:'Buku, internet, telefon, gym, sukan', tag:'Pelepasan RM 2,500', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'📋', name:'Resit Pemeriksaan Perubatan', hint:'Resit klinik / hospital', tag:'Pelepasan RM 1,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+  {icon:'🎓', name:'Resit Kursus / Yuran', hint:'Peningkatan kemahiran, sijil profesional', tag:'Pelepasan RM 7,000', tc:'var(--blue-600)', tb:'var(--blue-50)'},
+];
+T.ms.ft_docs_self=[
+  {icon:'📊', name:'Rekod Pendapatan & Perbelanjaan', hint:'Invois, resit, penyata untung rugi', tag:'Bekerja Sendiri', tc:'var(--amber-600)', tb:'var(--amber-50)'},
+  {icon:'🧾', name:'Resit Perbelanjaan Perniagaan', hint:'Peralatan, perjalanan, pejabat, langganan', tag:'Boleh Tolak', tc:'var(--amber-600)', tb:'var(--amber-50)'},
+];
+
+// Hook buildFirstTimer into setLang
+const _origSetLang = setLang;
+// Override applyTranslations to also rebuild first-timer
+const _origApply = applyTranslations;
+function applyTranslations() {
+  _origApply();
+  buildFirstTimer();
+}
+
+// Init first-timer
+buildFirstTimer();
+ftGoStep(0);
+
+// ══════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════
 initCheckState();
@@ -1174,6 +1618,7 @@ buildTips();
 updateCountdown();
 setInterval(updateCountdown, 60000);
 setTimeout(() => { const h = document.querySelector('.cat-header'); if(h) h.click(); }, 100);
+
 </script>
 </body>
 </html>
