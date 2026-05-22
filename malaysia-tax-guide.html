@@ -198,7 +198,8 @@ input,select{font-family:var(--font-body)}
       <div class="logo">🇲🇾 TaxSavvy MY</div>
       <div class="nav-right">
         <div class="nav-tabs">
-          <button class="nav-tab active" onclick="switchTab('checklist',this)" data-i18n="tab_checklist">Relief Checklist</button>
+          <button class="nav-tab active" onclick="switchTab('home',this)" data-i18n="tab_home">🏠 Home</button>
+          <button class="nav-tab" onclick="switchTab('checklist',this)" data-i18n="tab_checklist">Relief Checklist</button>
           <button class="nav-tab" onclick="switchTab('calc',this)" data-i18n="tab_calc">Calculator</button>
           <button class="nav-tab" onclick="switchTab('tips',this)" data-i18n="tab_tips">Tips & FAQ</button>
           <button class="nav-tab" onclick="switchTab('firsttime',this)" data-i18n="tab_firsttime">🌱 First-Timer</button>
@@ -215,14 +216,18 @@ input,select{font-family:var(--font-body)}
 
 <div class="container page-wrap">
 
+  <!-- ═══ TAB: HOME ═══ -->
+  <div class="tab-pane active" id="tab-home">
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-eyebrow">✦ YA 2024 · e-Filing Edition</div>
     <h1 data-i18n="hero_title">Malaysia Income Tax<br/><em>Guide</em> — Claim Everything!</h1>
     <p data-i18n="hero_sub">Thousands of ringgit in tax relief go unclaimed every year. This guide helps you maximise every deduction — for both salaried employees & self-employed.</p>
     <div class="hero-cta">
-      <button class="btn btn-green" onclick="switchTab('checklist',document.querySelector('.nav-tab'))" data-i18n="hero_cta1">☑ Start Checklist</button>
-      <button class="btn btn-outline" onclick="switchTab('calc',document.querySelectorAll('.nav-tab')[1])" data-i18n="hero_cta2">🧮 Calculate My Tax</button>
+      <button class="btn btn-green" onclick="switchTab('checklist',document.querySelectorAll('.nav-tab')[1])" data-i18n="hero_cta1">☑ Start Checklist</button>
+      <button class="btn btn-outline" onclick="switchTab('calc',document.querySelectorAll('.nav-tab')[2])" data-i18n="hero_cta2">🧮 Calculate My Tax</button>
+      <button class="btn btn-outline" onclick="switchTab('firsttime',document.querySelectorAll('.nav-tab')[4])" data-i18n="hero_cta3">🌱 First-Timer Guide</button>
     </div>
   </section>
 
@@ -291,8 +296,10 @@ input,select{font-family:var(--font-body)}
     </div>
   </div>
 
+  </div><!-- /tab-home -->
+
   <!-- ═══ TAB: CHECKLIST ═══ -->
-  <div class="tab-pane active" id="tab-checklist">
+  <div class="tab-pane" id="tab-checklist">
     <div class="section">
       <div class="section-title">
         <div class="section-icon" style="background:var(--green-50);color:var(--green-600)">☑</div>
@@ -625,10 +632,10 @@ input,select{font-family:var(--font-body)}
 // ══════════════════════════════════════════════════════
 const T = {
   en: {
-    tab_checklist:'Relief Checklist', tab_calc:'Calculator', tab_tips:'Tips & FAQ',
+    tab_home:'🏠 Home', tab_checklist:'Relief Checklist', tab_calc:'Calculator', tab_tips:'Tips & FAQ',
     hero_title:'Malaysia Income Tax<br/><em>Guide</em> — Claim Everything!',
     hero_sub:'Thousands of ringgit in tax relief go unclaimed every year. This guide helps you maximise every deduction — for salaried employees & self-employed.',
-    hero_cta1:'☑ Start Checklist', hero_cta2:'🧮 Calculate My Tax',
+    hero_cta1:'☑ Start Checklist', hero_cta2:'🧮 Calculate My Tax', hero_cta3:'🌱 First-Timer Guide',
     deadline_title:'e-Filing Deadlines 2025 (YA 2024) — Don\'t be late!',
     deadline_sub:'All dates are for e-Filing. Manual submission is 2 weeks earlier.',
     dl1_tag:'⚡ Salaried Employee', dl1_desc:'Form BE · Employment income',
@@ -704,10 +711,10 @@ const T = {
   },
 
   zh: {
-    tab_checklist:'减税清单', tab_calc:'计算器', tab_tips:'技巧 & 常见问题',
+    tab_home:'🏠 首页', tab_checklist:'减税清单', tab_calc:'计算器', tab_tips:'技巧 & 常见问题',
     hero_title:'马来西亚所得税<br/><em>攻略</em> — 全部 Claim 到尽！',
     hero_sub:'每年有成千上万令吉的减税额被白白浪费。这份攻略帮你把每一项扣税都 claim 到位 — 打工族和自雇人士都适用。',
-    hero_cta1:'☑ 开始 Checklist', hero_cta2:'🧮 计算我的税',
+    hero_cta1:'☑ 开始 Checklist', hero_cta2:'🧮 计算我的税', hero_cta3:'🌱 新手指南',
     deadline_title:'2025 年 e-Filing 截止日期（YA 2024）— 别迟交！',
     deadline_sub:'以下日期为 e-Filing 截止日。纸本申报需提前两周。',
     dl1_tag:'⚡ 打工族', dl1_desc:'BE 表格 · 受雇收入',
@@ -775,10 +782,10 @@ const T = {
   },
 
   ms: {
-    tab_checklist:'Senarai Semak', tab_calc:'Kalkulator', tab_tips:'Tips & Soalan Lazim',
+    tab_home:'🏠 Utama', tab_checklist:'Senarai Semak', tab_calc:'Kalkulator', tab_tips:'Tips & Soalan Lazim',
     hero_title:'Panduan Cukai Pendapatan<br/><em>Malaysia</em> — Tuntut Semua!',
     hero_sub:'Ribuan ringgit pelepasan cukai tidak dituntut setiap tahun. Panduan ini membantu anda maksimakan setiap pelepasan — untuk pekerja bergaji & bekerja sendiri.',
-    hero_cta1:'☑ Mula Senarai Semak', hero_cta2:'🧮 Kira Cukai Saya',
+    hero_cta1:'☑ Mula Senarai Semak', hero_cta2:'🧮 Kira Cukai Saya', hero_cta3:'🌱 Panduan Pemula',
     deadline_title:'Tarikh Akhir e-Filing 2025 (YA 2024) — Jangan Lewat!',
     deadline_sub:'Semua tarikh adalah untuk e-Filing. Penghantaran manual 2 minggu lebih awal.',
     dl1_tag:'⚡ Pekerja Bergaji', dl1_desc:'Borang BE · Pendapatan penggajian',
@@ -1143,6 +1150,7 @@ function switchTab(id, btn) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   if (btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 // ══════════════════════════════════════════════════════
@@ -1199,12 +1207,22 @@ function ftCheckElig(type) {
   };
   const r = results[type];
   const res = document.getElementById('ft-checker-result');
-  res.style.cssText = `display:flex;gap:10px;margin-top:12px;padding:12px 14px;border-radius:var(--radius-md);font-size:13px;line-height:1.6;background:${r.bg};border-color:${r.border};color:${r.color}`;
+  res.style.cssText = `display:flex;gap:10px;margin-top:12px;padding:12px 14px;border-radius:var(--radius-md);font-size:13px;line-height:1.6;background:${r.bg};border:1px solid ${r.border};color:${r.color}`;
   res.innerHTML = `<span>${r.icon}</span><span>${r.text}</span>`;
-  // Mark selected radio
-  document.querySelectorAll('.ft-elig-opt').forEach(el => el.classList.remove('active'));
+  // Update visual selection on all options
+  document.querySelectorAll('.ft-elig-opt').forEach(el => {
+    const dot = el.querySelector('.ft-radio-dot');
+    if (dot) { dot.style.background = ''; dot.style.borderColor = 'var(--border-strong)'; }
+    el.style.borderColor = 'var(--border)';
+    el.style.background = 'var(--surface)';
+  });
   const sel = document.getElementById('ft-elig-'+type);
-  if (sel) sel.classList.add('active');
+  if (sel) {
+    sel.style.borderColor = 'var(--green-600)';
+    sel.style.background = 'var(--green-50)';
+    const dot = sel.querySelector('.ft-radio-dot');
+    if (dot) { dot.style.background = 'var(--green-600)'; dot.style.borderColor = 'var(--green-600)'; }
+  }
 }
 
 // ── First-Timer: Doc Checklist ──
@@ -1243,7 +1261,7 @@ function buildFirstTimer() {
     optsEl.innerHTML = opts.map(o => `
       <div id="ft-elig-${o.k}" class="ft-elig-opt" onclick="ftCheckElig('${o.k}')"
         style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius-md);border:1px solid var(--border);cursor:pointer;background:var(--surface);transition:all .15s;font-size:13px;color:var(--text-secondary)">
-        <input type="radio" name="ft-elig" style="accent-color:var(--green-600)" />
+        <div class="ft-radio-dot" style="width:16px;height:16px;border-radius:50%;border:2px solid var(--border-strong);flex-shrink:0;transition:all .2s"></div>
         <span>${o.label}</span>
       </div>`).join('');
   }
