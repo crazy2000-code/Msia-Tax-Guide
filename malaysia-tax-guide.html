@@ -171,6 +171,7 @@ input,select{font-family:var(--font-body)}
 .tab-pane.active{display:block}
 .ft-step{display:none}
 .ft-step.active{display:block}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* FOOTER */
 .footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
@@ -511,12 +512,38 @@ input,select{font-family:var(--font-body)}
           </div>
           <div style="height:1px;background:var(--border)"></div>
           <div style="padding:20px 24px">
-            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_ess">Essential</div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_ess_title">Essential</div>
             <div id="ft-docs-ess" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
-            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_rel">For Relief Claims</div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_rel_title">For Relief Claims</div>
             <div id="ft-docs-rel" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
-            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_self">Self-Employed Extra</div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px" data-i18n="ft_docs_self_title">Self-Employed Extra</div>
             <div id="ft-docs-self" style="display:flex;flex-direction:column;gap:8px"></div>
+
+            <!-- UPLOAD SECTION -->
+            <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:20px">
+              <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px" data-i18n="ft_upload_title">📎 Upload Your Documents for AI Verification</div>
+              <div id="ft-upload-area"
+                ondragover="event.preventDefault();this.style.borderColor='var(--green-600)'"
+                ondragleave="this.style.borderColor='var(--border-strong)'"
+                ondrop="ftHandleDrop(event)"
+                style="border:2px dashed var(--border-strong);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--surface-2)"
+                onclick="document.getElementById('ft-file-input').click()">
+                <div style="font-size:32px;margin-bottom:8px">📄</div>
+                <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:4px" data-i18n="ft_upload_cta">Click or drag files here</div>
+                <div style="font-size:12px;color:var(--text-secondary)" data-i18n="ft_upload_sub">EA Form, EPF statement, receipts, insurance policy — JPG, PNG, PDF</div>
+              </div>
+              <input type="file" id="ft-file-input" multiple accept="image/*,.pdf" style="display:none" onchange="ftHandleFiles(this.files)" />
+              <div id="ft-file-list" style="margin-top:12px;display:flex;flex-direction:column;gap:8px"></div>
+              <div id="ft-ai-result" style="display:none;margin-top:16px;background:var(--green-50);border:1px solid var(--green-100);border-radius:var(--radius-md);padding:16px">
+                <div style="font-size:12px;font-weight:700;color:var(--green-600);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">✨ AI Document Check</div>
+                <div id="ft-ai-text" style="font-size:13px;color:var(--text-primary);line-height:1.7"></div>
+              </div>
+              <div id="ft-ai-loading" style="display:none;margin-top:16px;text-align:center;padding:20px;color:var(--text-secondary);font-size:13px">
+                <div style="font-size:24px;margin-bottom:8px;animation:spin 1s linear infinite;display:inline-block">⟳</div>
+                <div data-i18n="ft_ai_checking">Checking your documents...</div>
+              </div>
+            </div>
+
             <div style="background:var(--amber-50);border:1px solid var(--amber-100);border-radius:var(--radius-md);padding:14px 16px;margin-top:16px;display:flex;gap:10px">
               <span>📁</span>
               <div style="font-size:13px;color:var(--amber-600);line-height:1.6" data-i18n="ft_docs_tip">Create a "Tax YA2024" folder in Google Drive and scan everything in. You'll thank yourself later!</div>
@@ -1376,6 +1403,10 @@ T.en.ft_s2_tag='STEP 02'; T.en.ft_s2_title='Register for a Tax File Number (TIN)
 T.en.ft_s2_already='Already registered? If your employer deducts PCB monthly, you\'re likely already in the system. Log in to <strong>mytax.hasil.gov.my</strong> to check.';
 T.en.ft_s2_tip='Tip: Ask your HR/payroll team for your tax file number — if PCB has been deducted, you\'re already registered!';
 T.en.ft_s3_tag='STEP 03'; T.en.ft_s3_title='Gather Your Documents';
+T.en.ft_docs_ess_title='Essential Documents'; T.en.ft_docs_rel_title='For Tax Relief Claims'; T.en.ft_docs_self_title='Self-Employed Extra';
+T.en.ft_upload_title='📎 Upload Your Documents for AI Verification';
+T.en.ft_upload_cta='Click or drag files here'; T.en.ft_upload_sub='EA Form, EPF statement, receipts — JPG, PNG, PDF';
+T.en.ft_ai_checking='Checking your documents...';
 T.en.ft_docs_ess='Essential'; T.en.ft_docs_rel='For Relief Claims'; T.en.ft_docs_self_label='Self-Employed Extra';
 T.en.ft_docs_tip='Create a "Tax YA2024" folder in Google Drive and scan everything in. You\'ll thank yourself later!';
 T.en.ft_s4_tag='STEP 04'; T.en.ft_s4_title='Log In & Fill the e-Form on MyTax';
@@ -1463,6 +1494,10 @@ T.zh.ft_s2_tag='第 02 步'; T.zh.ft_s2_title='注册税务档案号码（TIN）
 T.zh.ft_s2_already='已经注册？若雇主每月扣除 PCB，你很可能已在系统中。登录 <strong>mytax.hasil.gov.my</strong> 检查。';
 T.zh.ft_s2_tip='小提示：向 HR 询问你的税务档案号码 — 若已扣 PCB，你已注册！';
 T.zh.ft_s3_tag='第 03 步'; T.zh.ft_s3_title='准备好所需文件';
+T.zh.ft_docs_ess_title='必备文件'; T.zh.ft_docs_rel_title='减税申报所需'; T.zh.ft_docs_self_title='自雇人士额外';
+T.zh.ft_upload_title='📎 上传文件让 AI 帮你核对';
+T.zh.ft_upload_cta='点击或拖拽文件到这里'; T.zh.ft_upload_sub='EA 表格、公积金报表、收据 — JPG、PNG、PDF';
+T.zh.ft_ai_checking='正在核对你的文件...';
 T.zh.ft_docs_ess='必备文件'; T.zh.ft_docs_rel='减税申报所需'; T.zh.ft_docs_self_label='自雇人士额外';
 T.zh.ft_docs_tip='在 Google Drive 创建"Tax YA2024"文件夹，把所有文件扫描上传进去！';
 T.zh.ft_s4_tag='第 04 步'; T.zh.ft_s4_title='登录 MyTax 填写报税表格';
@@ -1550,6 +1585,10 @@ T.ms.ft_s2_tag='LANGKAH 02'; T.ms.ft_s2_title='Daftar Nombor Fail Cukai (TIN)';
 T.ms.ft_s2_already='Sudah berdaftar? Jika majikan potongan PCB bulanan, anda mungkin sudah dalam sistem. Log masuk ke <strong>mytax.hasil.gov.my</strong> untuk semak.';
 T.ms.ft_s2_tip='Tip: Tanya HR/gaji anda untuk nombor fail cukai — jika PCB telah dipotong, anda sudah berdaftar!';
 T.ms.ft_s3_tag='LANGKAH 03'; T.ms.ft_s3_title='Kumpulkan Dokumen Anda';
+T.ms.ft_docs_ess_title='Dokumen Asas'; T.ms.ft_docs_rel_title='Untuk Tuntutan Pelepasan'; T.ms.ft_docs_self_title='Tambahan Bekerja Sendiri';
+T.ms.ft_upload_title='📎 Muat Naik Dokumen untuk Semakan AI';
+T.ms.ft_upload_cta='Klik atau seret fail ke sini'; T.ms.ft_upload_sub='Borang EA, penyata KWSP, resit — JPG, PNG, PDF';
+T.ms.ft_ai_checking='Sedang menyemak dokumen anda...';
 T.ms.ft_docs_ess='Dokumen Asas'; T.ms.ft_docs_rel='Untuk Tuntutan Pelepasan'; T.ms.ft_docs_self_label='Tambahan Bekerja Sendiri';
 T.ms.ft_docs_tip='Buat folder "Tax YA2024" dalam Google Drive dan imbas semua dokumen ke sana!';
 T.ms.ft_s4_tag='LANGKAH 04'; T.ms.ft_s4_title='Log Masuk & Isi Borang e-Filing di MyTax';
@@ -1614,7 +1653,110 @@ T.ms.ft_docs_self=[
   {icon:'🧾', name:'Resit Perbelanjaan Perniagaan', hint:'Peralatan, perjalanan, pejabat, langganan', tag:'Boleh Tolak', tc:'var(--amber-600)', tb:'var(--amber-50)'},
 ];
 
-// buildFirstTimer is called inside setLang directly (see below)
+// ══════════════════════════════════════════════════════
+// DOCUMENT UPLOAD + AI CHECK
+// ══════════════════════════════════════════════════════
+let ftUploadedFiles = [];
+
+function ftHandleDrop(e) {
+  e.preventDefault();
+  document.getElementById('ft-upload-area').style.borderColor = 'var(--border-strong)';
+  ftHandleFiles(e.dataTransfer.files);
+}
+
+function ftHandleFiles(files) {
+  Array.from(files).forEach(file => {
+    if (ftUploadedFiles.find(f => f.name === file.name)) return;
+    ftUploadedFiles.push(file);
+    renderFileList();
+  });
+  if (ftUploadedFiles.length > 0) ftRunAICheck();
+}
+
+function ftRemoveFile(name) {
+  ftUploadedFiles = ftUploadedFiles.filter(f => f.name !== name);
+  renderFileList();
+  if (ftUploadedFiles.length === 0) {
+    document.getElementById('ft-ai-result').style.display = 'none';
+  }
+}
+
+function renderFileList() {
+  const list = document.getElementById('ft-file-list');
+  list.innerHTML = ftUploadedFiles.map(f => `
+    <div style="display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:10px 14px">
+      <span style="font-size:18px">${f.type.includes('pdf') ? '📄' : '🖼️'}</span>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;color:var(--text-primary)">${f.name}</div>
+        <div style="font-size:11px;color:var(--text-secondary)">${(f.size/1024).toFixed(0)} KB</div>
+      </div>
+      <button onclick="ftRemoveFile('${f.name}')" style="border:none;background:var(--surface-3);color:var(--text-muted);border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer">✕</button>
+    </div>`).join('');
+}
+
+async function ftRunAICheck() {
+  const loading = document.getElementById('ft-ai-loading');
+  const result = document.getElementById('ft-ai-result');
+  const resultText = document.getElementById('ft-ai-text');
+  loading.style.display = 'block';
+  result.style.display = 'none';
+
+  // Convert files to base64 for API
+  const fileContents = await Promise.all(ftUploadedFiles.map(async f => {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ name: f.name, type: f.type, b64: reader.result.split(',')[1] });
+      reader.readAsDataURL(f);
+    });
+  }));
+
+  const fileNames = fileContents.map(f => f.name).join(', ');
+  const langNames = {en:'English', zh:'Chinese', ms:'Bahasa Malaysia'};
+
+  // Build content array with images/pdfs
+  const userContent = [];
+  fileContents.forEach(f => {
+    if (f.type.startsWith('image/')) {
+      userContent.push({ type:'image', source:{ type:'base64', media_type:f.type, data:f.b64 }});
+    } else if (f.type === 'application/pdf') {
+      userContent.push({ type:'document', source:{ type:'base64', media_type:'application/pdf', data:f.b64 }});
+    }
+  });
+  userContent.push({ type:'text', text:`You are a Malaysia income tax assistant. The user has uploaded these documents for their YA2024 tax filing: ${fileNames}. 
+Please respond in ${langNames[lang]}.
+1. Identify what each document is (EA Form, EPF statement, insurance, receipt, etc.)
+2. Check if it looks complete and valid for tax filing purposes
+3. Note any important figures you can see (e.g. total income, PCB deducted, EPF amount)
+4. Mention which tax relief category it supports
+5. Flag anything missing or that needs attention
+Keep it concise and friendly. Use bullet points.` });
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role:'user', content: userContent }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.map(c => c.text || '').join('') || 'Could not analyse the document. Please try again.';
+    loading.style.display = 'none';
+    result.style.display = 'block';
+    // Render markdown-ish bullet points
+    resultText.innerHTML = text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^- (.+)$/gm, '<div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:var(--green-600);flex-shrink:0">•</span><span>$1</span></div>')
+      .replace(/\n\n/g, '<br/>');
+  } catch(err) {
+    loading.style.display = 'none';
+    result.style.display = 'block';
+    resultText.innerHTML = '<span style="color:var(--coral-600)">⚠ Could not connect to AI. Please check your connection and try again.</span>';
+  }
+}
+
 
 // Init first-timer
 buildFirstTimer();
